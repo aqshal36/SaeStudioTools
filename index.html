@@ -2,146 +2,32 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>SAE Polaroid</title>
-<link rel="icon" type="image/png" href="favSae.png">
+<title>Max Printing Bogor - Layout Polaroid</title>
+<link rel="icon" type="image/png" href="logo.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body {
-  margin:20px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background:#f5f5f5;
-  color:#222;
-  transition:background-color 0.4s ease, color 0.4s ease;
-}
-#controls {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  align-items:center;
-  margin-bottom:15px;
-  padding:15px;
-  background:#fff;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  transition:background-color 0.4s ease, border-color 0.4s ease;
-}
-select, textarea, input[type="file"], input[type="color"] {
-  padding:8px 12px;
-  border-radius:6px;
-  border:1px solid #ccc;
-  font-size:14px;
-  transition:background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
-}
-textarea {
-  flex:1;
-  min-width:300px;
-  resize:vertical;
-}
-button {
-  padding:10px 16px;
-  border:none;
-  border-radius:6px;
-  background:linear-gradient(90deg,#4facfe,#00f2fe);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
+body { margin:20px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f5f5f5; color:#222; transition:background-color 0.4s ease, color 0.4s ease; }
+#controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:15px; padding:15px; background:#fff; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition:background-color 0.4s ease, border-color 0.4s ease; }
+select, textarea, input[type="file"], input[type="color"] { padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:14px; transition:background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease; }
+textarea { flex:1; min-width:300px; resize:vertical; }
+button { padding:10px 16px; border:none; border-radius:6px; background:linear-gradient(90deg,#4facfe,#00f2fe); color:white; font-weight:bold; cursor:pointer; transition:0.3s; display:flex; align-items:center; gap:6px; }
 button:hover { background:linear-gradient(90deg,#00f2fe,#4facfe); }
-
-#darkToggle {
-  background:#444;
-  color:#fff;
-}
-#darkToggle:hover {
-  background:#666;
-}
-#preview {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:10px;
-}
-#preview img {
-  height:120px;
-  border:2px solid #ddd;
-  border-radius:6px;
-  object-fit:cover;
-  transition:transform 0.2s;
-  cursor:pointer;
-}
-#preview img:hover {
-  transform:scale(1.05);
-}
-#progressContainer {
-  width:100%;
-  margin:10px 0;
-  display:none;
-  background:#eee;
-  border-radius:10px;
-  overflow:hidden;
-  position:relative;
-  height:25px;
-}
-#progressBar {
-  width:0%;
-  height:100%;
-  background:linear-gradient(90deg,#4facfe,#00f2fe);
-  transition:width 0.3s;
-}
-#progressText {
-  position:absolute;
-  width:100%;
-  top:0;
-  left:0;
-  text-align:center;
-  font-size:14px;
-  line-height:25px;
-  color:#333;
-  font-weight:bold;
-  transition:color 0.4s ease;
-}
-#folderName {
-  font-size:14px;
-  font-weight:bold;
-  color:#0070c0;
-  margin-top:8px;
-}
-#infoKeterangan {
-  margin:5px 0 10px;
-  font-size:14px;
-  font-weight:bold;
-  color:#222;
-  transition:color 0.4s ease;
-}
-#appVersion {
-  width:100%;
-  text-align:right;
-  font-size:12px;
-  color:#555;
-  margin-top:5px;
-  font-style:italic;
-  transition:color 0.4s ease;
-}
-
-/* Responsif */
-@media(max-width:768px){
-  #controls { flex-direction:column; align-items:flex-start; }
-  textarea { min-width:100%; }
-}
-@media(max-width:600px){
-  #preview img { height:200px; }
-}
-
-/* Mode Gelap */
+#darkToggle { background:#444; color:#fff; }
+#darkToggle:hover { background:#666; }
+#preview { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+#preview img { height:120px; border:2px solid #ddd; border-radius:6px; object-fit:cover; transition:transform 0.2s; cursor:pointer; }
+#preview img:hover { transform:scale(1.05); }
+#progressContainer { width:100%; margin:10px 0; display:none; background:#eee; border-radius:10px; overflow:hidden; position:relative; height:25px; }
+#progressBar { width:0%; height:100%; background:linear-gradient(90deg,#4facfe,#00f2fe); transition:width 0.3s; }
+#progressText { position:absolute; width:100%; top:0; left:0; text-align:center; font-size:14px; line-height:25px; color:#333; font-weight:bold; transition:color 0.4s ease; }
+#folderName { font-size:14px; font-weight:bold; color:#0070c0; margin-top:8px; }
+#infoKeterangan { margin:5px 0 10px; font-size:14px; font-weight:bold; color:#222; transition:color 0.4s ease; }
+#appVersion { width:100%; text-align:right; font-size:12px; color:#555; margin-top:5px; font-style:italic; transition:color 0.4s ease; }
+@media(max-width:768px){ #controls { flex-direction:column; align-items:flex-start; } textarea { min-width:100%; } }
+@media(max-width:600px){ #preview img { height:200px; } }
 body.dark-mode { background-color:#121212; color:#f1f1f1; }
 body.dark-mode #controls { background:#1e1e1e; border:1px solid #333; }
-body.dark-mode input, body.dark-mode select, body.dark-mode button, body.dark-mode textarea {
-  background:#333; color:#f1f1f1; border:1px solid #555;
-}
+body.dark-mode input, body.dark-mode select, body.dark-mode button, body.dark-mode textarea { background:#333; color:#f1f1f1; border:1px solid #555; }
 body.dark-mode #preview { background:#222; }
 body.dark-mode #progressContainer { background:#333; }
 body.dark-mode #progressText { color:#ffeb3b; }
@@ -149,66 +35,24 @@ body.dark-mode #folderName { color:#00e0ff; }
 body.dark-mode #infoKeterangan { color:#ffeb3b; }
 body.dark-mode #appVersion { color:#aaa; }
 body.dark-mode #darkToggle { background:#ff9800; color:#000; }
-
-/* Modal Zoom */
-#imgModal {
-  display:none;
-  position:fixed;
-  z-index:9999;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.9);
-  justify-content:center;
-  align-items:center;
-}
-#imgModal img {
-  max-width:90%;
-  max-height:90%;
-  border-radius:10px;
-  box-shadow:0 0 20px rgba(255,255,255,0.3);
-}
-
-/* Tooltip Alt */
-.altTooltip {
-  position:absolute;
-  background:rgba(0,0,0,0.8);
-  color:white;
-  padding:3px 6px;
-  border-radius:4px;
-  font-size:12px;
-  font-family:sans-serif;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity 0.3s;
-  z-index:10000;
-}
+#imgModal { display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; }
+#imgModal img { max-width:90%; max-height:90%; border-radius:10px; box-shadow:0 0 20px rgba(255,255,255,0.3); }
 </style>
 </head>
 <body>
-<div style="text-align: center; margin-bottom: 20px;">
-      <img src="bigLogoSae.png" alt="Logo Toko" style="max-height: 80px; width: auto; border-radius: 8px;">
-      <h2 style="margin: 5px 0 0 0; color: #0070c0;">Aplikasi Layout Polaroid</h2>
-  </div>
-  <div id="controls">
-    
 
+<div style="text-align: center; margin-bottom: 20px;">
+    <img src="logo.png" alt="Max Printing Logo" style="max-height: 80px; width: auto; border-radius: 8px;">
+    <h2 style="margin: 5px 0 0 0; color: #0070c0;">Aplikasi Layout Polaroid</h2>
+</div>
 
 <div id="controls">
-  <!-- Upload buttons (gaya lembut) -->
-  <button type="button" id="uploadFolderBtn" title="Pilih folder (jika browser mendukung)">
-    📁 Upload Folder
-  </button>
-  <button type="button" id="uploadFilesBtn" title="Pilih file (multi-select)">
-    🖼️ Upload File PDF
-  </button>
+  <button type="button" id="uploadFolderBtn" title="Pilih folder (jika browser mendukung)">📁 Upload Folder</button>
+  <button type="button" id="uploadFilesBtn" title="Pilih file gambar atau PDF">🖼️ Upload Gambar / PDF</button>
 
-  <!-- Hidden inputs: one for folder (webkitdirectory) and one for files -->
   <input type="file" id="uploadFolder" style="display:none" webkitdirectory directory multiple accept="image/*">
-  <input type="file" id="uploadFiles" style="display:none" multiple accept="image/*,application/pdf"> 
+  <input type="file" id="uploadFiles" style="display:none" multiple accept="image/*, .pdf, application/pdf">
 
-  <!-- Existing controls -->
   <select id="sizeSelect">
     <option value="6x9">2R (6x9 cm)</option>
     <option value="8.9x12.7">3R (8.9x12.7 cm)</option>
@@ -234,19 +78,20 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
   <textarea id="captionInput" placeholder="Tulis caption di sini" rows="2"></textarea>
 
   <label>Pilih Warna Margin:</label>
-<input type="color" id="warnaMarginPilihan" value="#ffffff" style="width: 5%; height: 40px; cursor: pointer; border: none;">
+  <input type="color" id="warnaMarginPilihan" value="#ffffff" style="width: 5%; height: 40px; cursor: pointer; border: none;">
   <label><input type="checkbox" id="autoCaptionToggle"> Isi Caption Otomatis</label>
 
   <button id="savePDF">Simpan PDF</button>
   <button id="resetBtn">Reset</button>
   <button id="darkToggle">🌙 Mode Malam</button>
+  
   <div style="margin: 10px 0;">
     <input type="checkbox" id="toggleWatermark">
     <label for="toggleWatermark">Aktifkan Teks Keliling (Watermark)</label>
-</div>
+  </div>
 </div>
 
-<div id="appVersion">Versi 1.0.0</div>
+<div id="appVersion">Versi 1.1.0</div>
 
 <div id="progressContainer">
   <div id="progressBar"></div>
@@ -257,24 +102,21 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
 <div id="infoKeterangan"></div>
 <div id="preview"></div>
 
-<!-- Modal Zoom -->
 <div id="imgModal"><img id="modalImg" src="" alt="Preview Besar"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 <script>
-    // Konfigurasi worker PDF.js (Wajib)
+    // Konfigurasi Worker PDF.js
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-/* Script SAE Polaroid - PDF Border & Watermark Keliling Kertas */
+/* Script Utama SAE Polaroid */
 (function(){
   'use strict';
   const { jsPDF } = window.jspdf || {};
 
-  // Elements
   const uploadFolderBtn = document.getElementById('uploadFolderBtn');
   const uploadFilesBtn = document.getElementById('uploadFilesBtn');
   const uploadFolder = document.getElementById('uploadFolder');
@@ -297,11 +139,8 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
   const imgModal = document.getElementById('imgModal');
   const modalImg = document.getElementById('modalImg');
 
-  // State
   let currentFiles = [];
   let bgImageObj = null;
-  const autoColors = ["#ff0000","#00b050","#0070c0","#7030a0","#FFDC00","#00EAFF","#ff69b4","#828282","#C28FF3","#91E7FF"];
-  let colorIndex = -1, currentColor = autoColors[0];
 
   const layoutConfig = {
     "6x9": {margin:0.5, border:0.5, bottom:1.5, w:6, h:9, pageW:32, pageH:48},
@@ -313,7 +152,6 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
   };
   function getLayoutConfig(){ return layoutConfig[sizeSelect && sizeSelect.value] || {margin:0.5,border:0.5,bottom:1.5,w:6,h:9,pageW:32,pageH:48}; }
 
-  // Helpers
   function loadImage(src){
     return new Promise((resolve,reject)=>{
       const img = new Image();
@@ -344,7 +182,6 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
     return best;
   }
 
-  // CREATE POLAROID NORMAL (Dikembalikan ke fungsi asli agar foto bersih)
   async function createPolaroid(img, W, H, dpi, bgOption, customCol, bgImgObjParam){
     const {border,bottom} = getLayoutConfig();
     const canvas = document.createElement('canvas');
@@ -539,42 +376,33 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
       uploadFiles.click();
     });
     
-    // LOGIKA BARU: Mampu membaca Gambar & Ekstrak PDF
+    // LOGIKA UPLOAD GAMBAR & PDF
     uploadFiles.addEventListener('change', async (e)=>{
       const rawFiles = fileListToArray(e.target.files || []);
       let processedFiles = [];
 
-      // Tampilkan indikator loading jika memproses PDF
       if(progressContainer) progressContainer.style.display = "block";
-      if(progressText) progressText.textContent = "Membaca file...";
 
       for (let file of rawFiles) {
-          if (file.type === "application/pdf") {
-              // --- JIKA FILE PDF: BONGKAR HALAMANNYA ---
+          if (file.type === "application/pdf" || file.name.toLowerCase().endsWith('.pdf')) {
               try {
                   const arrayBuffer = await file.arrayBuffer();
                   const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
                   
-                  // Looping untuk mengambil setiap halaman PDF
                   for (let i = 1; i <= pdfDoc.numPages; i++) {
                       if(progressText) progressText.textContent = `Mengekstrak PDF Halaman ${i}/${pdfDoc.numPages}...`;
                       
                       const page = await pdfDoc.getPage(i);
-                      // Gunakan scale 2.0 atau 3.0 agar hasil gambar PDF tidak pecah saat dicetak
-                      const viewport = page.getViewport({ scale: 3.0 }); 
+                      const viewport = page.getViewport({ scale: 2.5 }); 
                       
                       const canvas = document.createElement('canvas');
                       const ctx = canvas.getContext('2d');
                       canvas.width = viewport.width;
                       canvas.height = viewport.height;
                       
-                      // Render halaman PDF ke dalam canvas
                       await page.render({ canvasContext: ctx, viewport: viewport }).promise;
                       
-                      // Ubah canvas menjadi file gambar (Blob)
                       const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
-                      
-                      // Manipulasi seolah-olah ini adalah file gambar yang diupload user
                       const imgFile = new File([blob], `pdf-page-${i}-${file.name}.jpg`, { type: 'image/jpeg' });
                       processedFiles.push(imgFile);
                   }
@@ -583,21 +411,18 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
                   alert("Gagal memproses PDF: " + file.name);
               }
           } else {
-              // --- JIKA FILE GAMBAR BIASA: LANGSUNG MASUKKAN ---
               processedFiles.push(file);
           }
       }
 
-      // Sembunyikan loading
       if(progressContainer) progressContainer.style.display = "none";
       if(progressText) progressText.textContent = "0%";
       
-      // Kirim kumpulan file campuran (Gambar asli + Gambar hasil ekstrak PDF) ke Preview
       await renderPreviewForFiles(processedFiles);
     });
   }
 
-  // --- LOGIKA SIMPAN PDF (DISINI TEMPAT BINGKAI & WATERMARK DIBUAT) ---
+  // LOGIKA SIMPAN PDF (DISINI TEMPAT BINGKAI & WATERMARK DIBUAT)
   if(saveBtn){
     saveBtn.addEventListener('click', async ()=>{
       try{
@@ -621,7 +446,7 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
         const finalCaption = (captionInput && captionInput.value.trim()) || "";
         const safeCaption = finalCaption.replace(/[\\\/:*?"<>|]/g,"_") || "polaroid";
 
-        // VVV SIKLUS HALAMAN DIMULAI DI SINI VVV
+        // LOOP HALAMAN PDF
         for(let i=0;i<currentFiles.length;i+=perPage){
           if(i>0) pdf.addPage();
           const pageFiles = currentFiles.slice(i, i+perPage);
@@ -631,11 +456,7 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
 
           // 1. GAMBAR GARIS TEPI / BINGKAI HALAMAN
           const warnaMarginEl = document.getElementById('warnaMarginPilihan');
-          
-          // 👇 DI SINI TEMPAT MENGUBAH KETEBALAN BINGKAI WARNA 👇
-          // Ganti angka 0.2 menjadi 0.5 atau 0.8 untuk membuatnya tebal kembali
-          let ketebalanBingkai = 0.5; 
-
+          let ketebalanBingkai = 0.5; // Ubah ini untuk ketebalan warna pinggir
           if(warnaMarginEl) {
               const [r, g, b] = hexToRgb(warnaMarginEl.value);
               pdf.setDrawColor(r, g, b);
@@ -644,7 +465,7 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
               pdf.rect(titikTengah, titikTengah, opt.pageW - ketebalanBingkai, opt.pageH - ketebalanBingkai);
           }
 
-          // 2. GAMBAR CROP MARKS (Garis Potong)
+          // 2. GAMBAR CROP MARKS
           pdf.setDrawColor(0, 0, 0); 
           pdf.setLineWidth(0.02);
           for(let c=0;c<=cols;c++){
@@ -658,39 +479,38 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
             pdf.line(left + totalW + 0.2, y, left + totalW + 0.7, y); 
           }
 
-          // 3. GAMBAR WATERMARK DI DALAM BATAS GARIS POTONG
+          // 3. GAMBAR WATERMARK
           const watermarkToggleEl = document.getElementById('toggleWatermark');
           if (watermarkToggleEl && watermarkToggleEl.checked) {
               let teksCaption = finalCaption !== "" ? finalCaption : "Watermark";
               
-              // 👇 DI SINI TEMPAT MENGUBAH OPACITY / KEPEKATAN WARNA TEKS 👇
-              // Format: pdf.setTextColor(R, G, B);
-              // Semakin besar angka (mendekati 255) = Semakin pudar / transparan (Cocok untuk Watermark)
-              // Semakin kecil angka (mendekati 0) = Semakin gelap / pekat
-              // Contoh: (230, 230, 230) = Sangat Pudar | (180, 180, 180) = Sedang | (100, 100, 100) = Gelap
-              pdf.setTextColor(180, 180, 180); 
-              
+              // OPACITY WARNA WATERMARK DI SINI (220, 220, 220 = Pudar)
+              pdf.setTextColor(220, 220, 220); 
               pdf.setFontSize(10);
               
               let batasAtas = top - 1.0;
               let batasBawah = top + totalH + 1.0;
+              let batasKanan = left + totalW + 1.0;
               
-              // Atas
+              // Atas & Bawah
               pdf.text(teksCaption, opt.pageW * 0.25, batasAtas, {align: 'center', baseline: 'middle'});
               pdf.text(teksCaption, opt.pageW * 0.50, batasAtas, {align: 'center', baseline: 'middle'});
               pdf.text(teksCaption, opt.pageW * 0.75, batasAtas, {align: 'center', baseline: 'middle'});
               
-              // Bawah
               pdf.text(teksCaption, opt.pageW * 0.25, batasBawah, {align: 'center', baseline: 'middle'});
+              pdf.text(teksCaption, opt.pageW * 0.50, batasBawah, {align: 'center', baseline: 'middle'});
               pdf.text(teksCaption, opt.pageW * 0.75, batasBawah, {align: 'center', baseline: 'middle'});
+              
+              // Kanan
+              pdf.text(teksCaption, batasKanan, opt.pageH * 0.25, {align: 'center', baseline: 'middle', angle: -90});
+              pdf.text(teksCaption, batasKanan, opt.pageH * 0.50, {align: 'center', baseline: 'middle', angle: -90});
+              pdf.text(teksCaption, batasKanan, opt.pageH * 0.75, {align: 'center', baseline: 'middle', angle: -90});
           }
 
-          // 4. CAPTION BAWAH HALAMAN
           pdf.setFontSize(14);
           pdf.setTextColor(0, 0, 0);
           pdf.text(finalCaption, opt.pageW/2, top + totalH + 1.2, {align: "center"});
 
-          // 5. TEMPEL GAMBAR POLAROID
           for(let idx=0; idx<pageFiles.length; idx++){
             const file = pageFiles[idx];
             let objectUrl = null;
@@ -711,7 +531,7 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
             if(progressBar) progressBar.style.width = p + '%';
             if(progressText) progressText.textContent = p + '%';
           }
-        } // ^^^ SIKLUS HALAMAN SELESAI DI SINI ^^^
+        }
 
         setTimeout(()=>{
           pdf.save(safeCaption + '.pdf');
