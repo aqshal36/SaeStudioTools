@@ -206,7 +206,7 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
 
   <!-- Hidden inputs: one for folder (webkitdirectory) and one for files -->
   <input type="file" id="uploadFolder" style="display:none" webkitdirectory directory multiple accept="image/*">
-  <input type="file" id="uploadFiles" style="display:none" multiple accept="image/*">
+  <input type="file" id="uploadFiles" style="display:none" multiple accept="image/*,application/pdf"> 
 
   <!-- Existing controls -->
   <select id="sizeSelect">
@@ -260,6 +260,13 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
 <!-- Modal Zoom -->
 <div id="imgModal"><img id="modalImg" src="" alt="Preview Besar"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+<script>
+    // Konfigurasi worker PDF.js (Wajib)
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 /* Script SAE Polaroid - PDF Border & Watermark Keliling Kertas */
@@ -531,9 +538,62 @@ body.dark-mode #darkToggle { background:#ff9800; color:#000; }
       uploadFiles.value = "";
       uploadFiles.click();
     });
+    
+    // LOGIKA BARU: Mampu membaca Gambar & Ekstrak PDF
     uploadFiles.addEventListener('change', async (e)=>{
-      const filesArr = fileListToArray(e.target.files || []);
-      await renderPreviewForFiles(filesArr);
+      const rawFiles = fileListToArray(e.target.files || []);
+      let processedFiles = [];
+
+      // Tampilkan indikator loading jika memproses PDF
+      if(progressContainer) progressContainer.style.display = "block";
+      if(progressText) progressText.textContent = "Membaca file...";
+
+      for (let file of rawFiles) {
+          if (file.type === "application/pdf") {
+              // --- JIKA FILE PDF: BONGKAR HALAMANNYA ---
+              try {
+                  const arrayBuffer = await file.arrayBuffer();
+                  const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
+                  
+                  // Looping untuk mengambil setiap halaman PDF
+                  for (let i = 1; i <= pdfDoc.numPages; i++) {
+                      if(progressText) progressText.textContent = `Mengekstrak PDF Halaman ${i}/${pdfDoc.numPages}...`;
+                      
+                      const page = await pdfDoc.getPage(i);
+                      // Gunakan scale 2.0 atau 3.0 agar hasil gambar PDF tidak pecah saat dicetak
+                      const viewport = page.getViewport({ scale: 3.0 }); 
+                      
+                      const canvas = document.createElement('canvas');
+                      const ctx = canvas.getContext('2d');
+                      canvas.width = viewport.width;
+                      canvas.height = viewport.height;
+                      
+                      // Render halaman PDF ke dalam canvas
+                      await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                      
+                      // Ubah canvas menjadi file gambar (Blob)
+                      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.95));
+                      
+                      // Manipulasi seolah-olah ini adalah file gambar yang diupload user
+                      const imgFile = new File([blob], `pdf-page-${i}-${file.name}.jpg`, { type: 'image/jpeg' });
+                      processedFiles.push(imgFile);
+                  }
+              } catch (err) {
+                  console.error("Gagal membaca PDF:", err);
+                  alert("Gagal memproses PDF: " + file.name);
+              }
+          } else {
+              // --- JIKA FILE GAMBAR BIASA: LANGSUNG MASUKKAN ---
+              processedFiles.push(file);
+          }
+      }
+
+      // Sembunyikan loading
+      if(progressContainer) progressContainer.style.display = "none";
+      if(progressText) progressText.textContent = "0%";
+      
+      // Kirim kumpulan file campuran (Gambar asli + Gambar hasil ekstrak PDF) ke Preview
+      await renderPreviewForFiles(processedFiles);
     });
   }
 
