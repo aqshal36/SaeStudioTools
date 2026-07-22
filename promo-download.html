@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promo Kemerdekaan – SAE Xpress Bogor</title>
+<link rel="icon" type="image/png" href="favSae.png">
+
+<!-- Fraunces = expressive display serif for the "MERDEKA" statement & big "17" numeral
+     Plus Jakarta Sans = body face (literally designed in Jakarta — fits an Indonesian promo)
+     JetBrains Mono = utility face for file-type badges (PDF / PLT) -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<!-- pdf.js — there's no separate preview image on disk, so every
+     thumbnail and stage image is rendered live from page 1 of the
+     item's own PDF. Requires the page to be served over http(s)
+     (GitHub Pages is fine); opening via file:// blocks the PDF fetch. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+</script>
+
+<style>
+/* ============================================================
+   TOKENS — Red & white, per brief. A restrained warm gold is
+   used ONLY as a hairline / label accent (never as a fill) so
+   the page reads as a proclamation plaque, not a cartoon flag.
+   ============================================================ */
+:root{
+  --merah:#CE1126;        /* Indonesian flag red */
+  --merah-deep:#7A0D18;
+  --merah-soft:#FBE3E6;
+  --putih:#FFFFFF;
+  --cream:#FFFBF6;
+  --ink:#231710;
+  --ink-soft:#6B584F;
+  --gold:#B8862E;
+  --line:#EFE1D8;
+  --radius:18px;
+  --shadow-md:0 10px 30px rgba(122,13,24,0.12);
+  --shadow-lg:0 20px 60px rgba(122,13,24,0.22);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+a{color:inherit;}
+
+/* ---------- Header ---------- */
+.app-header{
+  background:var(--merah);
+  padding:0 36px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 20px rgba(122,13,24,0.35);
+  position:relative;z-index:5;
+}
+.header-brand{display:flex;align-items:center;gap:12px;}
+.header-logo{width:36px;height:36px;background:rgba(255,255,255,0.18);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid rgba(255,255,255,0.3);}
+.header-name{font-family:'Fraunces',serif;font-size:19px;color:white;font-style:italic;}
+.header-back{font-size:13px;font-weight:600;color:rgba(255,255,255,0.9);text-decoration:none;border:1px solid rgba(255,255,255,0.4);padding:7px 16px;border-radius:100px;transition:background .2s;}
+.header-back:hover{background:rgba(255,255,255,0.15);}
+
+/* ---------- Signature element: pennant bunting garland ----------
+   Triangular "umbul-umbul" bunting is the single most recognisable
+   street decoration for 17 Agustus in Indonesia — this is the one
+   bold, subject-specific move the whole page is built around.      */
+.bunting{
+  display:flex;justify-content:center;
+  padding-top:6px;
+  background:var(--putih);
+  overflow:hidden;
+}
+.bunting-string{
+  display:flex;
+  transform:translateY(-2px);
+}
+.pennant{
+  width:34px;height:44px;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;
+  animation:sway 3.4s ease-in-out infinite;
+  margin:0 1px;
+}
+.pennant:nth-child(odd){background:var(--merah);}
+.pennant:nth-child(even){background:var(--putih);border-left:1px solid var(--line);border-right:1px solid var(--line);}
+.pennant:nth-child(3n){animation-delay:.3s;}
+.pennant:nth-child(4n){animation-delay:.6s;}
+.pennant:nth-child(5n){animation-delay:.9s;}
+@keyframes sway{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+@media (prefers-reduced-motion:reduce){.pennant{animation:none;}}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;
+  text-align:center;
+  padding:56px 24px 40px;
+  background:var(--putih);
+  overflow:hidden;
+}
+/* faint batik-inspired kawung dot texture, red-on-white, barely visible */
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:radial-gradient(var(--merah) 1px,transparent 1.6px);
+  background-size:26px 26px;
+  opacity:0.05;
+  pointer-events:none;
+}
+.hero-numeral{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(90px,16vw,180px);
+  line-height:0.8;
+  color:var(--merah-soft);
+  position:absolute;
+  left:50%;top:8px;
+  transform:translateX(-50%);
+  z-index:0;
+  user-select:none;
+}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--merah);
+  border:1px solid var(--merah);
+  padding:6px 16px;border-radius:100px;
+  margin-bottom:22px;
+}
+.hero-title{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:clamp(40px,6vw,64px);
+  letter-spacing:-1px;
+  color:var(--ink);
+  margin-bottom:14px;
+}
+.hero-title em{font-style:italic;color:var(--merah);}
+.hero-sub{
+  font-size:16px;color:var(--ink-soft);line-height:1.7;
+  max-width:460px;margin:0 auto;
+}
+.hero-date{
+  margin-top:18px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;letter-spacing:1px;color:var(--gold);
+}
+
+/* ---------- Previewer ---------- */
+.previewer-wrap{
+  max-width:1080px;margin:0 auto;
+  padding:8px 24px 80px;
+}
+.previewer{
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:28px;
+  background:var(--putih);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow:var(--shadow-md);
+}
+.stage{
+  position:relative;
+  border-radius:14px;
+  overflow:hidden;         /* zoomed image clips neatly at these rounded edges */
+  background:var(--merah-soft);
+  aspect-ratio:3/4;
+  display:flex;align-items:center;justify-content:center;
+  cursor:zoom-in;
+}
+.stage img{
+  width:100%;height:100%;object-fit:contain;background:var(--putih);display:block;
+  transition:transform .2s ease;
+  transform-origin:center center; /* JS updates this to follow the cursor on hover */
+}
+.stage:hover img{transform:scale(2);}
+.stage.is-loading::after,
+.thumb-img.is-loading{
+  content:'';
+  background:linear-gradient(100deg,var(--merah-soft) 30%,#fff 50%,var(--merah-soft) 70%);
+  background-size:200% 100%;
+  animation:shimmer 1.2s ease-in-out infinite;
+}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.stage-badge{
+  position:absolute;top:14px;left:14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:700;letter-spacing:.5px;
+  background:var(--merah);color:var(--putih);
+  padding:5px 12px;border-radius:100px;
+}
+
+.panel{display:flex;flex-direction:column;}
+.panel-title{
+  font-family:'Fraunces',serif;font-size:26px;font-weight:600;
+  color:var(--ink);margin-bottom:8px;
+}
+.panel-desc{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:20px;}
+
+.file-badges{display:flex;gap:8px;margin-bottom:24px;}
+.file-badge{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  border:1px solid var(--line);color:var(--ink-soft);
+  padding:6px 12px;border-radius:8px;letter-spacing:.5px;
+}
+
+.download-btn{
+  margin-top:auto;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--merah);color:var(--putih);
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;
+  border:none;border-radius:12px;
+  padding:16px 20px;
+  cursor:pointer;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  box-shadow:var(--shadow-md);
+}
+.download-btn:hover{background:var(--merah-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.download-btn:active{transform:translateY(0);}
+.download-btn[disabled]{opacity:.55;cursor:wait;transform:none;}
+.download-note{font-size:12px;color:var(--ink-soft);text-align:center;margin-top:10px;}
+.download-error{
+  font-size:12px;color:var(--merah-deep);text-align:center;margin-top:10px;
+  background:var(--merah-soft);border:1px solid var(--merah);border-radius:8px;padding:8px 10px;
+}
+
+/* ---------- RTL carousel of choices ----------
+   The strip's scroll axis is right-to-left: content starts flush
+   with the RIGHT edge, and "next" moves the eye leftward — the
+   direction:rtl trick below flips native scroll behaviour while
+   each thumbnail keeps direction:ltr so its own text stays normal. */
+.carousel-row{
+  display:flex;align-items:center;gap:10px;
+  margin-top:26px;
+}
+.carousel-nav{
+  width:38px;height:38px;flex:0 0 auto;
+  border-radius:50%;border:1px solid var(--line);
+  background:var(--putih);color:var(--merah);
+  font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .18s, border-color .18s;
+}
+.carousel-nav:hover{background:var(--merah-soft);border-color:var(--merah);}
+
+.carousel-track{
+  direction:rtl;                 /* <-- flow starts on the right */
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  scroll-snap-type:x mandatory;
+  padding:4px 2px 10px;
+  flex:1;
+}
+.carousel-track::-webkit-scrollbar{height:6px;}
+.carousel-track::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px;}
+
+.thumb{
+  direction:ltr;                 /* text/labels inside stay normal */
+  flex:0 0 auto;
+  width:78px;
+  scroll-snap-align:center;
+  cursor:pointer;
+  border:none;background:none;
+  padding:0;
+  text-align:center;
+}
+.thumb-img{
+  width:78px;height:78px;
+  border-radius:10px;
+  object-fit:cover;
+  border:2px solid transparent;
+  transition:border-color .18s, transform .18s;
+  display:block;
+}
+.thumb.active .thumb-img{border-color:var(--merah);transform:translateY(-3px);}
+.thumb-label{
+  display:block;font-size:10px;color:var(--ink-soft);
+  margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.thumb.active .thumb-label{color:var(--merah);font-weight:700;}
+
+.landing-footer{
+  text-align:center;padding:24px;color:var(--ink-soft);font-size:13px;
+  border-top:1px solid var(--line);background:var(--putih);
+}
+
+@media (max-width:760px){
+  .previewer{grid-template-columns:1fr;}
+  .app-header{padding:0 20px;}
+  .hero{padding:44px 18px 30px;}
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-brand">
+    <div class="header-logo">🖨</div>
+    <div class="header-name">SAE Xpress</div>
+  </div>
+  <a class="header-back" href="index.html">← Studio Tools</a>
+</header>
+
+<!-- Pennant bunting garland — generated by JS below so the count
+     always fills the viewport width cleanly -->
+<div class="bunting"><div class="bunting-string" id="buntingString"></div></div>
+
+<section class="hero">
+  <div class="hero-numeral" aria-hidden="true">17</div>
+  <div class="hero-inner">
+    <span class="hero-eyebrow">Edisi Terbatas</span>
+    <h1 class="hero-title">Promo <em>Kemerdekaan</em></h1>
+    <p class="hero-sub">Kumpulan desain siap cetak untuk perayaan 17 Agustus. Pilih desain di bawah, lihat pratinjaunya, lalu unduh satu paket file lengkap.</p>
+    <div class="hero-date">17 · 08 · MERDEKA</div>
+  </div>
+</section>
+
+<div class="previewer-wrap">
+  <div class="previewer">
+
+    <!-- Main preview stage -->
+    <div class="stage">
+      <span class="stage-badge" id="stageBadge">01 / 06</span>
+      <img id="stageImage" src="" alt="Pratinjau desain">
+    </div>
+
+    <!-- Info + download panel -->
+    <div class="panel">
+      <h2 class="panel-title" id="panelTitle">—</h2>
+      <p class="panel-desc" id="panelDesc">—</p>
+
+      <div class="file-badges">
+        <span class="file-badge">.PDF</span>
+        <span class="file-badge">.PLT</span>
+      </div>
+
+      <button class="download-btn" id="downloadBtn">
+        <span>⬇</span> <span id="downloadBtnLabel">Download Bundle</span>
+      </button>
+      <p class="download-note">Mengunduh file PDF dan PLT dari desain yang sedang ditampilkan.</p>
+      <p class="download-error" id="downloadError" hidden></p>
+
+      <!-- RTL carousel -->
+      <div class="carousel-row">
+        <button class="carousel-nav" id="navRight" title="Sebelumnya (kanan)">›</button>
+        <div class="carousel-track" id="carouselTrack"></div>
+        <button class="carousel-nav" id="navLeft" title="Berikutnya (kiri)">‹</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="landing-footer">Promo Kemerdekaan · SAE Xpress Bogor</footer>
+
+<script>
+/* ============================================================
+   DATA — one entry per folder in your file structure.
+   See the folder-structure note at the bottom of this file for
+   exactly what each folder must contain.
+   ============================================================ */
+/* Each item's PDF is named after its own id (e.g. B1 → B1.pdf), and
+   the JPEG preview follows the same convention (B1.jpg) — rename
+   `previewFile` per item if yours differs. The PLT has an unrelated
+   auto-generated filename per item, so that one has to be spelled
+   out explicitly; there's no pattern to derive it from. */
+const ITEMS = [
+  { id:'B1', title:'Sticker Cutiing',      desc:'Sticker Set 1.',        folder:'assets/promo-agustusan/B1', previewFile:'B1.jpg', pltFile:'51607893.plt' },
+  { id:'B2', title:'Sticker Cutiing',      desc:'Sticker Set 2.',        folder:'assets/promo-agustusan/B2', previewFile:'B2.jpg', pltFile:'68798608.plt' },
+  { id:'B3', title:'Sticker Cutiing',      desc:'Sticker Set 3.',        folder:'assets/promo-agustusan/B3', previewFile:'B3.jpg', pltFile:'68798608.plt' },
+  { id:'B4', title:'Sticker Cutiing',      desc:'Sticker Set 4.',        folder:'assets/promo-agustusan/B4', previewFile:'B4.jpg', pltFile:'68798608.plt' },
+  { id:'B5', title:'Sticker Cutiing',      desc:'Sticker Set 5.',        folder:'assets/promo-agustusan/B5', previewFile:'B5.jpg', pltFile:'72799270.plt' },
+  { id:'M1', title:'Sticker Cutiing',      desc:'Sticker Mix 1.',        folder:'assets/promo-agustusan/M1', previewFile:'M1.jpg', pltFile:'37925099.plt' },
+  { id:'M2', title:'Sticker Cutiing',      desc:'Sticker Mix 2.',        folder:'assets/promo-agustusan/M2', previewFile:'M2.jpg', pltFile:'68798608.plt' }
+];
+
+function getFiles(item){
+  return {
+    pdf:     `${item.folder}/${item.id}.pdf`,      // downloaded in the bundle
+    plt:     `${item.folder}/${item.pltFile}`,     // downloaded in the bundle, original filename kept
+    preview: `${item.folder}/${item.previewFile}`, // fast JPEG shown in the UI, not downloaded
+  };
+}
+
+/* ============================================================
+   PREVIEW — the JPEG loads first for speed. renderPdfPreview()
+   is now only a FALLBACK, used if the JPEG is missing/fails to
+   load, so you still get a preview even for folders you haven't
+   added a JPEG to yet.
+   ============================================================ */
+async function renderPdfPreview(pdfUrl, targetWidth){
+  const doc  = await pdfjsLib.getDocument(pdfUrl).promise;
+  const page = await doc.getPage(1);
+
+  const baseViewport = page.getViewport({ scale: 1 });
+  const scale = targetWidth / baseViewport.width;
+  const viewport = page.getViewport({ scale });
+
+  const canvas = document.createElement('canvas');
+  canvas.width = viewport.width;
+  canvas.height = viewport.height;
+  await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+  return canvas.toDataURL('image/png');
+}
+
+/* Placeholder shown only if BOTH the JPEG and the PDF fallback fail
+   (wrong path, file missing, network error, etc). */
+function errorPreview(item, attemptedUrl){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='500'>
+    <rect width='400' height='500' fill='#FBE3E6'/>
+    <rect width='400' height='500' fill='none' stroke='#CE1126' stroke-width='6'/>
+    <text x='50%' y='44%' font-family='Georgia,serif' font-size='22' fill='#7A0D18'
+      text-anchor='middle' dominant-baseline='middle'>Pratinjau tidak ditemukan</text>
+    <text x='50%' y='54%' font-family='monospace' font-size='11' fill='#7A0D18'
+      text-anchor='middle' dominant-baseline='middle'>${attemptedUrl}</text>
+    <text x='50%' y='62%' font-family='monospace' font-size='11' fill='#7A0D18'
+      text-anchor='middle' dominant-baseline='middle'>Cek DevTools Console (F12) untuk detail</text>
+  </svg>`;
+  return 'data:image/svg+xml;base64,' + btoa(svg);
+}
+
+/* Resolves to a preview URL for an item: JPEG if it loads, otherwise
+   a PDF-rendered image, otherwise the error card. Cached on the item
+   itself (item._previewCache) so it's only computed once. */
+function getPreviewUrl(item){
+  if (item._previewCache) return Promise.resolve(item._previewCache);
+
+  const files = getFiles(item);
+  return new Promise(resolve => {
+    const probe = new Image();
+    probe.onload = () => { item._previewCache = files.preview; resolve(files.preview); };
+    probe.onerror = () => {
+      renderPdfPreview(files.pdf, 700)
+        .then(dataUrl => { item._previewCache = dataUrl; resolve(dataUrl); })
+        .catch(err => {
+          console.error(`Gagal memuat pratinjau untuk ${item.id} (jpg: ${files.preview}, pdf: ${files.pdf}):`, err);
+          item._previewCache = errorPreview(item, files.preview);
+          resolve(item._previewCache);
+        });
+    };
+    probe.src = files.preview;
+  });
+}
+
+let current = 0;
+
+const stage           = document.querySelector('.stage');
+const stageImage      = document.getElementById('stageImage');
+const stageBadge      = document.getElementById('stageBadge');
+const panelTitle      = document.getElementById('panelTitle');
+const panelDesc       = document.getElementById('panelDesc');
+const carouselTrack   = document.getElementById('carouselTrack');
+const downloadBtn     = document.getElementById('downloadBtn');
+const downloadBtnLabel= document.getElementById('downloadBtnLabel');
+
+function renderCarousel(){
+  carouselTrack.innerHTML = '';
+  ITEMS.forEach((item, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'thumb' + (i === current ? ' active' : '');
+    btn.setAttribute('aria-label', item.title);
+    btn.innerHTML = `
+      <img class="thumb-img is-loading" data-item-id="${item.id}">
+      <span class="thumb-label">${item.title}</span>`;
+    btn.addEventListener('click', () => selectItem(i));
+    carouselTrack.appendChild(btn);
+
+    getPreviewUrl(item).then(url => {
+      const img = carouselTrack.querySelector(`img[data-item-id="${item.id}"]`);
+      if (img) { img.src = url; img.classList.remove('is-loading'); }
+      if (i === current) applyStageImage(url);
+    });
+  });
+}
+
+function applyStageImage(url){
+  stage.classList.remove('is-loading');
+  stageImage.src = url;
+}
+
+function selectItem(index){
+  current = (index + ITEMS.length) % ITEMS.length;
+  const item = ITEMS[current];
+
+  stageBadge.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(ITEMS.length).padStart(2,'0');
+  panelTitle.textContent = item.title;
+  panelDesc.textContent  = item.desc;
+
+  if (item._previewCache) {
+    applyStageImage(item._previewCache);
+  } else {
+    stage.classList.add('is-loading');
+    stageImage.src = '';
+    getPreviewUrl(item).then(url => { if (ITEMS[current] === item) applyStageImage(url); });
+  }
+
+  [...carouselTrack.children].forEach((el, i) => el.classList.toggle('active', i === current));
+  const activeThumb = carouselTrack.children[current];
+  if (activeThumb) activeThumb.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+}
+
+/* RTL navigation: "left" arrow moves forward through the list
+   (visually leftward, matching the RTL scroll direction),
+   "right" arrow moves back toward the start on the right. */
+document.getElementById('navLeft').addEventListener('click', () => selectItem(current + 1));
+document.getElementById('navRight').addEventListener('click', () => selectItem(current - 1));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft')  selectItem(current + 1);
+  if (e.key === 'ArrowRight') selectItem(current - 1);
+});
+
+/* ============================================================
+   BUNDLE DOWNLOAD — triggers PDF + PLT for the item currently
+   shown in the stage.
+
+   Uses fetch() + blob instead of a bare <a download href="...">.
+   A plain anchor's `download` attribute is only honoured reliably
+   for same-origin files with a browser-recognised extension —
+   many setups will just navigate to/preview a .plt file instead of
+   saving it. Fetching the bytes ourselves and downloading the blob
+   forces an actual save regardless of the file extension.
+   ============================================================ */
+const downloadError = document.getElementById('downloadError');
+
+async function downloadFile(url, filename){
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText} — ${url}`);
+  const blob = await res.blob();
+  const blobUrl = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(blobUrl);
+}
+
+downloadBtn.addEventListener('click', async () => {
+  const item = ITEMS[current];
+  const files = getFiles(item);
+  const bundle = [
+    { url: files.pdf, name: `${item.id}.pdf` },
+    { url: files.plt, name: item.pltFile },   // keep original filename, e.g. 51607893.plt
+  ];
+
+  downloadBtn.disabled = true;
+  downloadBtnLabel.textContent = 'Menyiapkan…';
+  downloadError.hidden = true;
+
+  for (const [i, file] of bundle.entries()){
+    try {
+      await downloadFile(file.url, file.name);
+      if (i < bundle.length - 1) await new Promise(r => setTimeout(r, 250)); // stagger saves
+    } catch (err) {
+      console.error(`Gagal mengunduh ${file.name}:`, err);
+      downloadError.textContent = `Gagal mengunduh ${file.name} — periksa apakah file ada di: ${file.url}`;
+      downloadError.hidden = false;
+    }
+  }
+
+  downloadBtn.disabled = false;
+  downloadBtnLabel.textContent = 'Download Bundle';
+});
+
+/* Hover-to-enlarge: CSS handles the scale itself (.stage:hover img),
+   this just moves the zoom's focal point to follow the cursor so it
+   behaves like a magnifier instead of always zooming from center. */
+stage.addEventListener('mousemove', (e) => {
+  const rect = stage.getBoundingClientRect();
+  const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+  const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+  stageImage.style.transformOrigin = `${xPct}% ${yPct}%`;
+});
+stage.addEventListener('mouseleave', () => {
+  stageImage.style.transformOrigin = 'center center';
+});
+
+/* Build the bunting garland to fill the header width */
+(function buildBunting(){
+  const el = document.getElementById('buntingString');
+  const count = Math.ceil(window.innerWidth / 36) + 4;
+  for (let i = 0; i < count; i++){
+    const p = document.createElement('div');
+    p.className = 'pennant';
+    el.appendChild(p);
+  }
+})();
+
+renderCarousel();
+selectItem(0);
+</script>
+</body>
+</html>

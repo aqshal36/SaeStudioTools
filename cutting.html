@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Pro Cutting Layout – SAE Xpress</title>
+<link rel="icon" type="image/png" href="favSae.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ── UI/UX Modern Design Tokens ── */
+:root {
+  --ink: #1e293b;
+  --paper: #f8fafc;
+  --cream: #ffffff;
+  --gold: #d97706;
+  --gold-dim: #fef3c7;
+  --blue: #1e3a8a;
+  --blue-light: #2563eb;
+  --blue-dim: #eff6ff;
+  --red: #dc2626;
+  --red-dim: #fef2f2;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 25px -3px rgba(0, 0, 0, 0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+
+/* ── Header Modern ── */
+.app-header { background: var(--cream); border-bottom: 1px solid var(--border); padding: 16px 24px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+.header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.header-left { display: flex; align-items: center; gap: 16px; }
+.header-logo-fallback { width: 44px; height: 44px; background: linear-gradient(135deg, var(--blue), var(--blue-light)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+.header-titles { display: flex; flex-direction: column; gap: 2px; }
+.header-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
+.header-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; line-height: 1; color: var(--ink); }
+.header-title em { font-style: italic; color: var(--blue-light); }
+.btn-back { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border: 1.5px solid var(--border); border-radius: 100px; background: white; color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.2s ease; }
+.btn-back:hover { background: var(--blue-dim); color: var(--blue-light); border-color: var(--blue-light); }
+
+/* ── Main Layout ── */
+.app-wrapper { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── Mode Selector Segments ── */
+.mode-selector { display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+.mode-card { flex: 1; min-width: 240px; background: var(--cream); border: 2px solid transparent; border-radius: var(--radius); padding: 24px; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
+.mode-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--border); }
+.mode-card.active.circle { border-color: var(--blue-light); background: var(--blue-dim); }
+.mode-card.active.lines { border-color: var(--gold); background: var(--gold-dim); }
+.mode-card.active.diecut { border-color: var(--red); background: var(--red-dim); }
+.mode-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.mode-label { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--ink); margin-bottom: 6px; }
+.mode-desc { font-size: 13px; color: var(--muted); line-height: 1.5; font-weight: 500; }
+.mode-check { position: absolute; top: 20px; right: 20px; width: 24px; height: 24px; border-radius: 50%; background: white; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: transparent; transition: all 0.2s; }
+.mode-card.active .mode-check { color: white; }
+.mode-card.active.circle .mode-check { background: var(--blue-light); border-color: var(--blue-light); }
+.mode-card.active.lines .mode-check { background: var(--gold); border-color: var(--gold); }
+.mode-card.active.diecut .mode-check { background: var(--red); border-color: var(--red); }
+
+/* ── Content Area ── */
+.main-layout { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+.card { background: var(--cream); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 28px; border: 1px solid var(--border); }
+.controls-card { flex: 1; min-width: 320px; }
+.preview-card { flex: 1.5; min-width: 320px; display: flex; flex-direction: column; align-items: center; }
+
+/* ── Inputs & Forms ── */
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.ctrl-divider { height: 1px; background: var(--border); margin: 24px 0; }
+.ctrl-col { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.ctrl-col label { font-size: 13px; color: var(--ink); font-weight: 600; }
+.ctrl-row { display: flex; gap: 12px; }
+.ctrl-row .ctrl-col { flex: 1; }
+
+select, input[type="number"] { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--ink); background: white; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; outline: none; width: 100%; transition: all 0.2s ease; }
+select:focus, input[type="number"]:focus { border-color: var(--blue-light); box-shadow: 0 0 0 4px var(--blue-dim); }
+
+.upload-box { background: white; border: 2px dashed #cbd5e1; border-radius: var(--radius-sm); padding: 24px 16px; text-align: center; cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden; }
+.upload-box:hover { border-color: var(--blue-light); background: var(--blue-dim); }
+.upload-box input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-box-icon { font-size: 28px; margin-bottom: 8px; }
+.upload-box-label { font-size: 14px; font-weight: 700; color: var(--ink); }
+.upload-box-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.upload-box.has-file { border-color: var(--blue-light); background: var(--blue-dim); border-style: solid; }
+
+/* ── Buttons ── */
+.btn { display: inline-flex; justify-content: center; align-items: center; gap: 8px; padding: 14px 24px; border: none; border-radius: var(--radius-sm); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; width: 100%; }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-primary { background: var(--blue-light); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
+.btn-primary:hover { background: #1d4ed8; box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35); }
+
+/* ── Preview Area ── */
+.canvas-wrap { width: 100%; max-width: 320px; aspect-ratio: 32 / 48; background: white; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-md); overflow: hidden; }
+canvas { width: 100%; height: 100%; display: block; }
+.diecut-canvas-wrap { width: 100%; max-width: 480px; aspect-ratio: 48 / 32; background: #f1f5f9; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-md); overflow: hidden; }
+.page-tab-row { display: flex; gap: 8px; margin-bottom: 16px; background: var(--paper); padding: 4px; border-radius: 100px; border: 1px solid var(--border); }
+.page-tab { flex: 1; padding: 8px 16px; border-radius: 100px; border: none; background: transparent; font-size: 12px; font-weight: 700; cursor: pointer; color: var(--muted); transition: all 0.2s; }
+.page-tab.active { background: white; color: var(--ink); box-shadow: var(--shadow-sm); }
+.info-box { width: 100%; margin-top: 16px; padding: 14px 16px; background: var(--paper); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; color: var(--muted); line-height: 1.6; text-align: center; font-weight: 500; }
+.info-box strong { color: var(--ink); font-weight: 700; }
+#loading { display: none; width: 100%; margin-top: 12px; padding: 12px; background: var(--gold-dim); border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; color: var(--gold); text-align: center; }
+.badge { display: inline-block; background: var(--ink); color: white; padding: 4px 10px; border-radius: 100px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; }
+.mode-pane { display: none; animation: fadeIn 0.4s ease; }
+.mode-pane.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 768px) { .main-layout { flex-direction: column; } .mode-selector { flex-direction: column; } }
+
+/* Transparent Grid Checker untuk Preview Diecut */
+.checker-bg { background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), linear-gradient(-45deg, #e2e8f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e2e8f0 75%), linear-gradient(-45deg, transparent 75%, #e2e8f0 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; }
+</style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="header-container">
+      <div class="header-left">
+        <div class="header-logo-fallback">✂️</div>
+        <div class="header-titles">
+          <span class="header-eyebrow">SAE Xpress Bogor</span>
+          <h1 class="header-title">Studio <em>Cutting</em></h1>
+        </div>
+      </div>
+      <div class="header-right"><a href="index.html" class="btn-back">← Beranda</a></div>
+    </div>
+  </header>
+
+<div class="app-wrapper">
+  <div class="mode-selector">
+    <div class="mode-card circle active" onclick="setMode('circle')" id="modeCardCircle">
+      <div class="mode-check" id="checkCircle">✓</div>
+      <div class="mode-icon">⭕</div>
+      <div class="mode-label">Lingkaran <em>Spiral</em></div>
+      <div class="mode-desc">Tempel desain ke grid template.</div>
+    </div>
+    <div class="mode-card lines" onclick="setMode('lines')" id="modeCardLines">
+      <div class="mode-check" id="checkLines"></div>
+      <div class="mode-icon">⊞</div>
+      <div class="mode-label">Pola <em>Garis</em></div>
+      <div class="mode-desc">Susun gambar kotak. Garis silang presisi tanpa tumpang tindih.</div>
+    </div>
+    <div class="mode-card diecut" onclick="setMode('diecut')" id="modeCardDiecut">
+      <div class="mode-check" id="checkDiecut"></div>
+      <div class="mode-icon">✂️</div>
+      <div class="mode-label">Diecut <em>Contour</em></div>
+      <div class="mode-desc">Garis potong otomatis mengikuti pola gambar.</div>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <div class="card controls-card">
+
+      <div class="mode-pane active" id="paneCircle">
+        <div class="section-label">Upload Desain <span class="badge">Lingkaran</span></div>
+        <div class="ctrl-col">
+          <div class="upload-box" id="uploadBoxDesign">
+            <div class="upload-box-icon">🖼️</div>
+            <div class="upload-box-label">Klik untuk pilih gambar</div>
+            <input type="file" id="designInput" accept="image/png,image/jpeg">
+          </div>
+        </div>
+        <div class="ctrl-divider"></div>
+        <div class="section-label">Diameter Pola</div>
+        <div class="ctrl-col">
+          <select id="sizeSelect">
+            <option value="1">1 cm</option><option value="1.1">1.1 cm</option><option value="1.2">1.2 cm</option>
+            <option value="1.3">1.3 cm</option><option value="1.4">1.4 cm</option><option value="1.5">1.5 cm</option>
+            <option value="1.6">1.6 cm</option><option value="1.7" selected>1.7 cm</option><option value="1.8">1.8 cm</option>
+            <option value="1.9">1.9 cm</option><option value="2">2 cm</option><option value="2.5">2.5 cm</option>
+            <option value="3">3 cm</option><option value="3.5">3.5 cm</option><option value="4">4 cm</option>
+            <option value="4.5">4.5 cm</option><option value="5">5 cm</option><option value="5.5">5.5 cm</option>
+            <option value="6">6 cm</option><option value="6.5">6.5 cm</option><option value="7">7 cm</option>
+            <option value="7.5">7.5 cm</option><option value="8">8 cm</option><option value="8.5">8.5 cm</option>
+            <option value="9">9 cm</option><option value="9.5">9.5 cm</option><option value="10">10 cm</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="generatePdfCircle" style="display:none; margin-top:12px;">💾 Simpan PDF Kertas A3+</button>
+      </div>
+
+      <div class="mode-pane" id="paneLines">
+        <div class="section-label">Upload Gambar <span class="badge" style="background:var(--gold)">Pola Garis</span></div>
+        <div class="ctrl-col">
+          <div class="upload-box" id="uploadBoxLines">
+            <div class="upload-box-icon">🖼️</div>
+            <div class="upload-box-label">Pilih Gambar</div>
+            <div class="upload-box-sub">Bisa pilih lebih dari 1 gambar sekaligus</div>
+            <input type="file" id="linesImageInput" accept="image/png,image/jpeg" multiple>
+          </div>
+        </div>
+
+        <div class="ctrl-divider"></div>
+        <div class="section-label">Ukuran Potong (Tanpa Jarak)</div>
+        <div class="ctrl-row">
+          <div class="ctrl-col"><label>Lebar (cm)</label><input type="number" id="cellWidth" value="4" min="0.5" step="0.1"></div>
+          <div class="ctrl-col"><label>Tinggi (cm)</label><input type="number" id="cellHeight" value="4" min="0.5" step="0.1"></div>
+        </div>
+        
+        <div class="info-box" style="margin: 0 0 16px 0; background: var(--blue-dim); border-color: var(--blue-light); color: var(--blue-light); text-align: left;">
+          ℹ️ Gambar akan di-stretch otomatis. Jalur potong dirancang presisi menyilang tanpa overlap agar pisau awet.
+        </div>
+
+        <div id="linesStats" style="font-size:13px; color:var(--muted); font-weight: 600; margin-bottom:16px;"></div>
+        <button class="btn btn-primary" id="generatePdfLines" disabled style="background:var(--gold); box-shadow:0 4px 12px rgba(217,119,6,0.3);">💾 Simpan PDF 2 Halaman</button>
+      </div>
+
+      <div class="mode-pane" id="paneDiecut">
+        <div class="section-label">Upload Gambar <span class="badge" style="background:var(--red)">Diecut Contour</span></div>
+        <div class="ctrl-col">
+          <div class="upload-box" id="uploadBoxDiecut">
+            <div class="upload-box-icon">✂️</div>
+            <div class="upload-box-label">Klik untuk pilih gambar (min. 1)</div>
+            <div class="upload-box-sub">PNG transparan disarankan</div>
+            <input type="file" id="diecutImageInput" accept="image/png,image/jpeg,application/pdf" multiple>
+          </div>
+        </div>
+        <div id="dcFileList" style="font-size:12px;color:var(--muted);font-weight:600;margin-top:8px;line-height:1.6;display:none;"></div>
+        <div class="ctrl-divider"></div>
+        <div class="section-label">Ukuran Kanvas (cm)</div>
+        <div class="ctrl-row">
+          <div class="ctrl-col"><label>Lebar Kanvas</label><input type="number" id="dcCanvasW" value="48" step="1" min="10"></div>
+          <div class="ctrl-col"><label>Tinggi Kanvas</label><input type="number" id="dcCanvasH" value="32" step="1" min="10"></div>
+        </div>
+        <div class="ctrl-divider"></div>
+        <div class="section-label">Ukuran & Jarak Gambar</div>
+        <div class="ctrl-row">
+          <div class="ctrl-col"><label>Lebar (cm)</label><input type="number" id="dcWidth" value="5" step="0.1" min="0.5"></div>
+          <div class="ctrl-col"><label>Tinggi (cm)</label><input type="number" id="dcHeight" value="5" step="0.1" min="0.5"></div>
+        </div>
+        <div class="ctrl-col" style="margin-top:4px;">
+          <label>Jarak antar gambar (cm)</label>
+          <input type="number" id="dcGap" value="0.3" min="0" step="0.05">
+        </div>
+        <div id="dcStats" style="font-size:13px;color:var(--muted);font-weight:600;margin-top:10px;"></div>
+        <button class="btn btn-primary" id="generatePdfDiecut" disabled style="margin-top:16px; background:var(--red); box-shadow:0 4px 12px rgba(220,38,38,0.3);">💾 Simpan PDF (PNG + Cut Vector)</button>
+      </div>
+
+    </div><div class="card preview-card">
+      <div class="mode-pane active" id="previewPaneCircle">
+        <div class="canvas-wrap"><canvas id="previewCanvas"></canvas></div>
+        <div id="loading">⏳ Menyelaraskan grid…</div>
+        <div class="info-box" id="stats">Upload <strong>Desain</strong> untuk melihat preview.</div>
+      </div>
+
+      <div class="mode-pane" id="previewPaneLines" style="width: 100%; display: none; flex-direction: column; align-items: center;">
+        <div class="page-tab-row" style="width: 100%; max-width: 320px;">
+          <button class="page-tab active" id="tabPage1" onclick="showLinesPage(1)">Hal. 1 — Desain</button>
+          <button class="page-tab" id="tabPage2" onclick="showLinesPage(2)">Hal. 2 — Potong</button>
+        </div>
+        <div class="canvas-wrap"><canvas id="linesCanvas"></canvas></div>
+        <div class="info-box" id="linesInfo">Upload gambar untuk melihat susunan.</div>
+      </div>
+
+      <div class="mode-pane" id="previewPaneDiecut" style="width: 100%; display: none; flex-direction: column; align-items: center;">
+        <div class="page-tab-row" style="width: 100%; max-width: 560px;">
+          <button class="page-tab active" id="dcTab1" onclick="showDiecutPage(1)">Hal. 1 — Desain (PNG)</button>
+          <button class="page-tab" id="dcTab2" onclick="showDiecutPage(2)">Hal. 2 — Garis Potong (Vektor)</button>
+        </div>
+        <div id="diecutCanvasWrap" class="checker-bg" style="width:100%;max-width:560px;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-md);overflow:hidden;">
+          <canvas id="diecutPreviewCanvas" style="width:100%;height:100%;display:block;"></canvas>
+        </div>
+        <div class="info-box" id="dcInfo" style="margin-top:12px;">Upload gambar untuk memulai preview.</div>
+      </div>
+    </div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+/* ════════════════════════════════════════
+   MODE SWITCHING
+════════════════════════════════════════ */
+let currentMode = 'circle';
+function setMode(mode) {
+  currentMode = mode;
+  ['circle','lines','diecut'].forEach(m => {
+    document.getElementById('modeCard' + cap(m)).classList.toggle('active', m === mode);
+    document.getElementById('pane' + cap(m)).classList.toggle('active', m === mode);
+    
+    const preview = document.getElementById('previewPane' + cap(m));
+    if (m === mode) {
+      preview.style.display = (m === 'circle') ? 'block' : 'flex';
+    } else {
+      preview.style.display = 'none';
+    }
+  });
+  document.getElementById('checkCircle').textContent = mode === 'circle' ? '✓' : '';
+  document.getElementById('checkLines').textContent  = mode === 'lines'  ? '✓' : '';
+  document.getElementById('checkDiecut').textContent = mode === 'diecut' ? '✓' : '';
+  if(mode === 'lines') drawLinesPreview();
+}
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+/* ════════════════════════════════════════
+   LINGKARAN SPIRAL
+════════════════════════════════════════ */
+const designInput = document.getElementById('designInput');
+const sizeSelect = document.getElementById('sizeSelect');
+const previewCanvas = document.getElementById('previewCanvas');
+const statsEl = document.getElementById('stats');
+const generatePdfCircle = document.getElementById('generatePdfCircle');
+const loadingEl = document.getElementById('loading');
+let designImg = null, processedData = null, circularDesignUrl = null;
+
+function cropToCircle(img) {
+  const canvas = document.createElement('canvas'); const size = Math.min(img.width, img.height);
+  canvas.width = size; canvas.height = size; const ctx = canvas.getContext('2d');
+  ctx.beginPath(); ctx.arc(size/2, size/2, size/2, 0, Math.PI*2); ctx.closePath(); ctx.clip();
+  ctx.drawImage(img, (img.width-size)/2, (img.height-size)/2, size, size, 0, 0, size, size);
+  return canvas.toDataURL('image/png', 1.0);
+}
+
+function extractCirclesAndEraseRed(imgObj, sizeCm) {
+  const canvas = document.createElement('canvas'); let w = imgObj.width, h = imgObj.height;
+  canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d');
+  ctx.drawImage(imgObj, 0, 0); let imgData = ctx.getImageData(0, 0, w, h); let data = imgData.data;
+  const pixelsPerCm = w / 32; const R = (sizeCm * pixelsPerCm) / 2; const expectedD = R * 2;
+  let rowSums = new Int32Array(h), colSums = new Int32Array(w);
+  for(let y=0;y<h;y++) for(let x=0;x<w;x++) { let idx=(y*w+x)*4; if(data[idx+3]>50 && data[idx]>120 && data[idx+1]<100 && data[idx+2]<100){rowSums[y]++;colSums[x]++;} }
+  function findEdges(sums) {
+    let maxVal=0; for(let v of sums) if(v>maxVal) maxVal=v;
+    let threshold=maxVal*0.25, edges=[], inPeak=false, cpMax=0, cpPos=0;
+    for(let i=0;i<sums.length;i++){
+      if(sums[i]>threshold){ inPeak=true; if(sums[i]>cpMax){cpMax=sums[i];cpPos=i;} }
+      else { if(inPeak){edges.push(cpPos);inPeak=false;cpMax=0;} }
+    }
+    if(inPeak) edges.push(cpPos); let centers=[];
+    for(let i=0;i<edges.length-1;i++) for(let j=i+1;j<edges.length;j++){
+      let dist=edges[j]-edges[i]; if(Math.abs(dist-expectedD)<expectedD*0.25) centers.push((edges[i]+edges[j])/2);
+    }
+    return centers;
+  }
+  let yCenters=findEdges(rowSums), xCenters=findEdges(colSums), finalCenters=[];
+  for(let cy of yCenters) for(let cx of xCenters){
+    let hitCount=0;
+    for(let a=0;a<360;a+=30){
+      let rad=a*Math.PI/180, px=Math.round(cx+R*Math.cos(rad)), py=Math.round(cy+R*Math.sin(rad)), foundHit=false;
+      for(let dy=-2;dy<=2&&!foundHit;dy++) for(let dx=-2;dx<=2&&!foundHit;dx++){
+        let sx=px+dx,sy=py+dy; if(sx>=0&&sx<w&&sy>=0&&sy<h){let idx=(sy*w+sx)*4;if(data[idx+3]>50&&data[idx]>120&&data[idx+1]<100&&data[idx+2]<100){foundHit=true;}}
+      }
+      if(foundHit) hitCount++;
+    }
+    if(hitCount>=5) finalCenters.push({x:cx,y:cy});
+  }
+  for(let i=0;i<data.length;i+=4) if(data[i+3]>50&&data[i]>120&&data[i+1]<100&&data[i+2]<100) data[i+3]=0;
+  ctx.putImageData(imgData,0,0); return {erasedDataUrl:canvas.toDataURL('image/png'), centers:finalCenters, pixelsPerCm};
+}
+
+designInput.addEventListener('change', (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  document.getElementById('uploadBoxDesign').classList.add('has-file');
+  document.querySelector('#uploadBoxDesign .upload-box-label').textContent = "1 Gambar Siap";
+  const reader = new FileReader();
+  reader.onload = (ev)=>{ const img=new Image(); img.onload=()=>{designImg=img;fetchTemplateAndProcess();}; img.src=ev.target.result; };
+  reader.readAsDataURL(file);
+});
+sizeSelect.addEventListener('change', ()=>{ if(designImg) fetchTemplateAndProcess(); });
+
+function fetchTemplateAndProcess() {
+  loadingEl.style.display='block'; generatePdfCircle.style.display='none';
+  const img = new Image();
+  img.onload = ()=>{
+    setTimeout(()=>{
+      circularDesignUrl = cropToCircle(designImg);
+      processedData = extractCirclesAndEraseRed(img, parseFloat(sizeSelect.value));
+      if(processedData.centers.length===0){
+        statsEl.innerHTML=`❌ Gagal menemukan grid ukuran tersebut.`;
+      } else {
+        statsEl.innerHTML=`Template: <strong>${sizeSelect.value} cm</strong><br>Total logo: <strong>${processedData.centers.length} pcs</strong>`;
+      }
+      drawCirclePreview(); loadingEl.style.display='none';
+      if(processedData.centers.length>0) generatePdfCircle.style.display='flex';
+    }, 100);
+  };
+  img.src=`pola/${sizeSelect.value}.png?v=${Date.now()}`;
+}
+
+function drawCirclePreview() {
+  if(!processedData||!circularDesignUrl) return;
+  const ctx=previewCanvas.getContext('2d');
+  previewCanvas.width=320; previewCanvas.height=480; ctx.clearRect(0,0,320,480);
+  const tempImg=new Image();
+  tempImg.onload=()=>{
+    ctx.drawImage(tempImg,0,0,320,480); const icon=new Image();
+    icon.onload=()=>{
+      const scale=320/(32*processedData.pixelsPerCm), radius=(parseFloat(sizeSelect.value)*processedData.pixelsPerCm)/2;
+      for(let c of processedData.centers){ ctx.drawImage(icon,(c.x-radius)*scale,(c.y-radius)*scale,(radius*2)*scale,(radius*2)*scale); }
+    }; icon.src=circularDesignUrl;
+  }; tempImg.src=processedData.erasedDataUrl;
+}
+
+generatePdfCircle.addEventListener('click',()=>{
+  if(!processedData) return;
+  loadingEl.style.display='block'; loadingEl.textContent="Menyusun file PDF..."; generatePdfCircle.style.display='none';
+  setTimeout(()=>{
+    const {jsPDF}=window.jspdf; const pdf=new jsPDF({unit:'cm',format:[32,48],orientation:'portrait'});
+    pdf.addImage(processedData.erasedDataUrl,'PNG',0,0,32,48);
+    const rCm=parseFloat(sizeSelect.value)/2;
+    for(let c of processedData.centers){
+      pdf.addImage(circularDesignUrl,'PNG',c.x/processedData.pixelsPerCm-rCm,c.y/processedData.pixelsPerCm-rCm,rCm*2,rCm*2);
+    }
+    pdf.save(`SAE_Circle_${processedData.centers.length}pcs.pdf`);
+    loadingEl.style.display='none'; generatePdfCircle.style.display='flex';
+  }, 100);
+});
+
+/* ════════════════════════════════════════
+   POLA GARIS (CROSS GRID)
+════════════════════════════════════════ */
+const PAGE_W = 32, PAGE_H = 48, PRINT_W = 31, PRINT_H = 44.5;
+const MARGIN_X = (PAGE_W - PRINT_W) / 2, MARGIN_Y = (PAGE_H - PRINT_H) / 2;
+
+const linesImageInput = document.getElementById('linesImageInput');
+const linesCanvas = document.getElementById('linesCanvas');
+const linesStats = document.getElementById('linesStats');
+const generatePdfLines = document.getElementById('generatePdfLines');
+const cellWidthInput = document.getElementById('cellWidth');
+const cellHeightInput = document.getElementById('cellHeight');
+
+let linesImgArray = [];
+let currentLinesPage = 1;
+const PREV_SCALE = 300 / PAGE_W;
+
+linesImageInput.addEventListener('change', async (e) => {
+  const files = e.target.files; if(!files.length) return;
+  document.getElementById('uploadBoxLines').classList.add('has-file');
+  document.querySelector('#uploadBoxLines .upload-box-label').textContent = files.length + " Gambar Terpilih";
+  
+  linesImgArray = [];
+  const loadImage = (file) => new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (ev) => { const img = new Image(); img.onload = () => resolve(img); img.src = ev.target.result; };
+    reader.readAsDataURL(file);
+  });
+  for(let i=0; i<files.length; i++){ const img = await loadImage(files[i]); linesImgArray.push(img); }
+  
+  drawLinesPreview(); updateLinesStats(); generatePdfLines.disabled = false;
+});
+
+[cellWidthInput, cellHeightInput].forEach(el => {
+  el.addEventListener('input', () => { drawLinesPreview(); updateLinesStats(); });
+});
+
+function getLinesParams() {
+  return { cellW: Math.max(0.5, parseFloat(cellWidthInput.value) || 4), cellH: Math.max(0.5, parseFloat(cellHeightInput.value) || 4) };
+}
+
+function calcGrid(cellW, cellH) {
+  const cols = Math.floor(PRINT_W / cellW), rows = Math.floor(PRINT_H / cellH);
+  const gridW = cols * cellW, gridH = rows * cellH;
+  return { cols, rows, gridW, gridH, startX: MARGIN_X + (PRINT_W - gridW) / 2, startY: MARGIN_Y + (PRINT_H - gridH) / 2 };
+}
+
+function updateLinesStats() {
+  const {cellW, cellH} = getLinesParams(); const {cols, rows} = calcGrid(cellW, cellH);
+  linesStats.innerHTML = `Area Print: ${cols} × ${rows} = <span style="color:var(--blue-light)">${cols*rows} pcs</span>`;
+}
+
+function showLinesPage(page) {
+  currentLinesPage = page;
+  document.getElementById('tabPage1').classList.toggle('active', page===1);
+  document.getElementById('tabPage2').classList.toggle('active', page===2);
+  drawLinesPreview();
+}
+
+function drawLinesPreview() {
+  const {cellW, cellH} = getLinesParams();
+  const {cols, rows, startX, startY, gridW, gridH} = calcGrid(cellW, cellH);
+  const s = PREV_SCALE, pw = Math.round(PAGE_W * s), ph = Math.round(PAGE_H * s);
+  linesCanvas.width = pw; linesCanvas.height = ph;
+  const ctx = linesCanvas.getContext('2d');
+  ctx.clearRect(0,0,pw,ph); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,pw,ph);
+
+  if(currentLinesPage === 1) {
+    if(linesImgArray.length > 0) {
+      for(let r=0; r<rows; r++) {
+        for(let c=0; c<cols; c++) {
+          const imgIndex = (r * cols + c) % linesImgArray.length;
+          ctx.drawImage(linesImgArray[imgIndex], (startX + c*cellW)*s, (startY + r*cellH)*s, cellW*s, cellH*s);
+        }
+      }
+    }
+  } else {
+    ctx.fillStyle='#f8fafc'; ctx.fillRect(MARGIN_X*s, MARGIN_Y*s, PRINT_W*s, PRINT_H*s);
+    ctx.strokeStyle='#dc2626'; ctx.lineWidth=0.8;
+
+    ctx.beginPath();
+    for (let r = 0; r <= rows; r++) {
+      const y = (startY + r * cellH) * s;
+      if (r === 0) ctx.moveTo(startX * s, y);
+      if (r % 2 === 0) { ctx.lineTo(startX * s, y); ctx.lineTo((startX + gridW) * s, y); } 
+      else { ctx.lineTo((startX + gridW) * s, y); ctx.lineTo(startX * s, y); }
+    }
+    ctx.stroke();
+
+    ctx.beginPath();
+    for (let c = 0; c <= cols; c++) {
+      const x = (startX + c * cellW) * s;
+      if (c === 0) ctx.moveTo(x, startY * s);
+      if (c % 2 === 0) { ctx.lineTo(x, startY * s); ctx.lineTo(x, (startY + gridH) * s); } 
+      else { ctx.lineTo(x, (startY + gridH) * s); ctx.lineTo(x, startY * s); }
+    }
+    ctx.stroke();
+  }
+}
+
+generatePdfLines.addEventListener('click', ()=>{
+  if(linesImgArray.length === 0) return;
+  generatePdfLines.disabled = true; generatePdfLines.textContent = '⏳ Menyusun PDF…';
+  const {cellW, cellH} = getLinesParams(); const {cols, rows, startX, startY, gridW, gridH} = calcGrid(cellW, cellH);
+  const HR = 96;
+
+  function renderPage1() {
+    const pw = Math.round(PAGE_W*HR), ph = Math.round(PAGE_H*HR), c = document.createElement('canvas');
+    c.width=pw; c.height=ph; const ctx=c.getContext('2d'); ctx.clearRect(0,0,pw,ph);
+    for(let r=0; r<rows; r++){
+      for(let col=0; col<cols; col++){
+        const imgIndex = (r * cols + col) % linesImgArray.length;
+        ctx.drawImage(linesImgArray[imgIndex], (startX+col*cellW)*HR, (startY+r*cellH)*HR, cellW*HR, cellH*HR);
+      }
+    }
+    return c.toDataURL('image/png', 1.0);
+  }
+
+  setTimeout(() => {
+    try {
+      const {jsPDF} = window.jspdf; 
+      const pdf = new jsPDF({unit: 'cm', format: [PAGE_W, PAGE_H], orientation: 'portrait'});
+      
+      pdf.addImage(renderPage1(), 'PNG', 0, 0, PAGE_W, PAGE_H);
+      pdf.addPage([PAGE_W, PAGE_H], 'portrait');
+      
+      pdf.setDrawColor(255, 0, 0); 
+      pdf.setLineWidth(0.001); 
+      
+      function drawContinuousPath(points) {
+        if (points.length < 2) return;
+        const sX = points[0].x, sY = points[0].y;
+        const lines = [];
+        let curX = sX, curY = sY;
+        for (let i = 1; i < points.length; i++) {
+          lines.push([points[i].x - curX, points[i].y - curY]);
+          curX = points[i].x; curY = points[i].y;
+        }
+        pdf.lines(lines, sX, sY, [1, 1], 'S');
+      }
+
+      const hPoints = [];
+      for (let r = 0; r <= rows; r++) {
+        const y = startY + r * cellH;
+        if (r % 2 === 0) { hPoints.push({x: startX, y: y}); hPoints.push({x: startX + gridW, y: y}); } 
+        else { hPoints.push({x: startX + gridW, y: y}); hPoints.push({x: startX, y: y}); }
+      }
+      drawContinuousPath(hPoints);
+
+      const vPoints = [];
+      for (let c = 0; c <= cols; c++) {
+        const x = startX + c * cellW;
+        if (c % 2 === 0) { vPoints.push({x: x, y: startY}); vPoints.push({x: x, y: startY + gridH}); } 
+        else { vPoints.push({x: x, y: startY + gridH}); vPoints.push({x: x, y: startY}); }
+      }
+      drawContinuousPath(vPoints);
+      
+      pdf.save(`SAE_Garis_Ular_${cols*rows}pcs.pdf`);
+    } catch (err) { alert('Gagal membuat PDF: ' + err.message); }
+    generatePdfLines.disabled = false; generatePdfLines.innerHTML = '💾 Simpan PDF 2 Halaman';
+  }, 100);
+});
+
+/* ════════════════════════════════════════
+   DIECUT CONTOUR — TANPA PEMBULATAN SUDUT PAKSA (TEPAT 90 DERAJAT)
+════════════════════════════════════════ */
+(function(){
+  let dcImages = [];          
+  let currentPage = 1;
+  let renderPending = false;
+
+  const canvas   = document.getElementById('diecutPreviewCanvas');
+  const ctx      = canvas.getContext('2d');
+  const genBtn   = document.getElementById('generatePdfDiecut');
+  const fileInput= document.getElementById('diecutImageInput');
+  const dcWInput = document.getElementById('dcWidth');
+  const dcHInput = document.getElementById('dcHeight');
+  const dcGapIn  = document.getElementById('dcGap');
+  const dcCWIn   = document.getElementById('dcCanvasW');
+  const dcCHIn   = document.getElementById('dcCanvasH');
+  const dcInfo   = document.getElementById('dcInfo');
+  const dcStats  = document.getElementById('dcStats');
+  const dcFileList = document.getElementById('dcFileList');
+
+  function getPW() { return Math.max(10, parseFloat(dcCWIn.value) || 48); }
+  function getPH() { return Math.max(10, parseFloat(dcCHIn.value) || 32); }
+  function getDcParams() {
+    return {
+      cellW: Math.max(0.5, parseFloat(dcWInput.value) || 5),
+      cellH: Math.max(0.5, parseFloat(dcHInput.value) || 5),
+      gap:   Math.max(0,   parseFloat(dcGapIn.value)  || 0.3)
+    };
+  }
+
+  const MARGIN_FRAC = 0.015; 
+  function calcDcGrid(cellW, cellH, gap) {
+    const PW = getPW(), PH = getPH();
+    const mx = PW * MARGIN_FRAC, my = PH * MARGIN_FRAC;
+    const printW = PW - mx * 2, printH = PH - my * 2;
+    const cols = Math.max(1, Math.floor((printW + gap) / (cellW + gap)));
+    const rows = Math.max(1, Math.floor((printH + gap) / (cellH + gap)));
+    const gridW = cols * cellW + (cols - 1) * gap;
+    const gridH = rows * cellH + (rows - 1) * gap;
+    return { cols, rows, gridW, gridH, startX: mx + (printW - gridW) / 2, startY: my + (printH - gridH) / 2, PW, PH };
+  }
+
+  const MAX_PREV = 520;
+  function resizePreviewCanvas() {
+    const PW = getPW(), PH = getPH();
+    const ratio = PW / PH;
+    let pw, ph;
+    if (ratio >= 1) { pw = MAX_PREV; ph = Math.round(MAX_PREV / ratio); }
+    else            { ph = MAX_PREV; pw = Math.round(MAX_PREV * ratio); }
+    canvas.width  = pw; canvas.height = ph;
+    return { pw, ph, pxPerCm: pw / PW };
+  }
+
+  // ── Algoritma Tracing Contour ──
+  function buildContour(img) {
+    return new Promise(resolve => {
+      const natW = img.naturalWidth, natH = img.naturalHeight;
+      if (natW === 0 || natH === 0) return resolve([]);
+
+      const oc = document.createElement('canvas');
+      oc.width = natW; oc.height = natH;
+      oc.getContext('2d').drawImage(img, 0, 0);
+      const imgData = oc.getContext('2d').getImageData(0, 0, natW, natH).data;
+
+      const DS  = Math.max(1, Math.round(natW / 800)); 
+      const PAD = 5;
+      const mW  = Math.ceil(natW / DS) + PAD * 2;
+      const mH  = Math.ceil(natH / DS) + PAD * 2;
+      const mask = new Uint8Array(mW * mH);
+
+      for (let y = 0; y < natH; y++) {
+        for (let x = 0; x < natW; x++) {
+          if (imgData[(y * natW + x) * 4 + 3] > 10) {
+            mask[(Math.floor(y / DS) + PAD) * mW + (Math.floor(x / DS) + PAD)] = 1;
+          }
+        }
+      }
+
+      const dx = [1,1,0,-1,-1,-1,0,1], dy = [0,1,1,1,0,-1,-1,-1];
+      let bestPts = [];
+      let visitedEdges = new Uint8Array(mW * mH);
+
+      for (let y = 1; y < mH - 1; y++) {
+        for (let x = 1; x < mW - 1; x++) {
+          if (mask[y * mW + x] && !mask[(y - 1) * mW + x] && !visitedEdges[y * mW + x]) {
+            const pts = [];
+            let cx = x, cy = y, dir = 6; 
+            for (let iter = 0; iter < mW * mH * 4; iter++) {
+              if (pts.length > 0 && cx === x && cy === y) break; 
+              pts.push({x: cx, y: cy});
+              visitedEdges[cy * mW + cx] = 1;
+              let found = false;
+              for (let d = 0; d < 8; d++) {
+                const nd = (dir + 5 + d) % 8, nx = cx + dx[nd], ny = cy + dy[nd];
+                if (nx >= 0 && ny >= 0 && nx < mW && ny < mH && mask[ny * mW + nx]) {
+                  cx = nx; cy = ny; dir = nd; found = true; break;
+                }
+              }
+              if (!found) break; 
+            }
+            if (pts.length > bestPts.length) bestPts = pts; 
+          }
+        }
+      }
+
+      if (bestPts.length < 3) {
+        resolve([{x:0,y:0},{x:natW,y:0},{x:natW,y:natH},{x:0,y:natH}]); return;
+      }
+
+      // Algoritma Vektor Standar
+      function rdp(points, eps) {
+        if (points.length < 3) return points;
+        const n = points.length, keep = new Uint8Array(n);
+        keep[0] = 1; keep[n - 1] = 1;
+        function dp(i, j) {
+          if (j - i < 2) return;
+          const ax = points[i].x, ay = points[i].y, bx = points[j].x, by = points[j].y;
+          const ddx = bx - ax, ddy = by - ay, len = Math.sqrt(ddx*ddx + ddy*ddy) || 1;
+          let maxD = 0, maxIdx = i;
+          for (let k = i + 1; k < j; k++) {
+            const d = Math.abs(ddy*(points[k].x-ax) - ddx*(points[k].y-ay)) / len;
+            if (d > maxD) { maxD = d; maxIdx = k; }
+          }
+          if (maxD > eps) { keep[maxIdx] = 1; dp(i, maxIdx); dp(maxIdx, j); }
+        }
+        dp(0, n - 1);
+        return points.filter((_, i) => keep[i]);
+      }
+
+      // 1. Penyederhanaan Garis Murni dengan "Sweet Spot" Epsilon = 1.2
+      // Ini akan menyatukan garis lurus dengan sempurna tapi tetap luwes di lekukan,
+      // tanpa memotong paksa (chamfer) titik sudut 90 derajat kotak
+      let simplified = rdp(bestPts, 1.2);
+
+      // (Fungsi Smooth / Chaikin Dihapus agar tidak merusak sudut siku-siku)
+
+      // 2. Petakan kembali ke ukuran aslinya
+      const mapped = simplified.map(p => ({
+        x: (p.x - PAD) * DS,
+        y: (p.y - PAD) * DS
+      }));
+      resolve(mapped);
+    });
+  }
+
+  function loadFileAsImages(file) {
+    return new Promise((resolve) => {
+      const type = file.type;
+      if (type === 'application/pdf') {
+        const url = URL.createObjectURL(file);
+        if (window.pdfjsLib) {
+          window.pdfjsLib.getDocument(url).promise.then(pdf => {
+            pdf.getPage(1).then(page => {
+              const vp = page.getViewport({ scale: 2 });
+              const c = document.createElement('canvas');
+              c.width = vp.width; c.height = vp.height;
+              page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.then(() => {
+                const img = new Image();
+                img.onload = () => resolve([img]);
+                img.src = c.toDataURL('image/png');
+                URL.revokeObjectURL(url);
+              });
+            });
+          }).catch(() => resolve([]));
+        } else {
+          const img = new Image();
+          img.onload = () => { resolve([img]); URL.revokeObjectURL(url); };
+          img.src = url;
+        }
+      } else {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const img = new Image();
+          img.onload = () => resolve([img]);
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  fileInput.addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    genBtn.disabled = true;
+    dcFileList.style.display = 'block';
+    dcFileList.innerHTML = '⏳ Memuat dan Membaca Garis Potong...';
+    dcImages = [];
+
+    for (const file of files) {
+      const imgs = await loadFileAsImages(file);
+      for (const img of imgs) {
+        const contourPts = await buildContour(img);
+        dcImages.push({ img, contourPts, name: file.name });
+      }
+    }
+
+    document.getElementById('uploadBoxDiecut').classList.add('has-file');
+    document.querySelector('#uploadBoxDiecut .upload-box-label').textContent = dcImages.length + ' Gambar Siap';
+    dcFileList.innerHTML = dcImages.map(d => `<span style="display:inline-block;margin-right:8px;">✅ ${d.name}</span>`).join('');
+
+    scheduleRedraw();
+    genBtn.disabled = false;
+  });
+
+  [dcWInput, dcHInput, dcGapIn, dcCWIn, dcCHIn].forEach(el =>
+    el.addEventListener('input', () => { if (dcImages.length) scheduleRedraw(); })
+  );
+
+  function scheduleRedraw() {
+    if (renderPending) return;
+    renderPending = true;
+    requestAnimationFrame(() => { renderPending = false; drawDiecutPreview(); });
+  }
+
+  window.drawDiecutPreview = function() {
+    const { pw, ph, pxPerCm } = resizePreviewCanvas();
+    ctx.clearRect(0, 0, pw, ph);
+
+    const PW = getPW(), PH = getPH();
+    const { cols, rows, startX, startY, cellW, cellH, gap, gridW, gridH } = (() => {
+      const p = getDcParams(); const g = calcDcGrid(p.cellW, p.cellH, p.gap); return { ...p, ...g };
+    })();
+
+    const mx = PW * MARGIN_FRAC * pxPerCm, my = PH * MARGIN_FRAC * pxPerCm;
+    ctx.strokeStyle = 'rgba(200,164,90,0.4)';
+    ctx.setLineDash([4, 3]); ctx.lineWidth = 1;
+    ctx.strokeRect(mx, my, pw - mx*2, ph - my*2);
+    ctx.setLineDash([]);
+
+    const total = cols * rows;
+    dcStats.innerHTML = `Grid: <strong>${cols} × ${rows} = ${total} pcs</strong>`;
+    dcInfo.innerHTML  = `<strong>${total} pcs</strong> · Kanvas ${PW}×${PH} cm · Gambar ${getDcParams().cellW}×${getDcParams().cellH} cm · Jarak ${getDcParams().gap} cm`;
+
+    if (!dcImages.length) return;
+
+    if (currentPage === 1) {
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const idx = (r * cols + c) % dcImages.length;
+          const { img } = dcImages[idx];
+          const xPx = (startX + c * (cellW + gap)) * pxPerCm;
+          const yPx = (startY + r * (cellH + gap)) * pxPerCm;
+          ctx.drawImage(img, xPx, yPx, cellW * pxPerCm, cellH * pxPerCm);
+        }
+      }
+    } else {
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const idx = (r * cols + c) % dcImages.length;
+          const { contourPts, img } = dcImages[idx];
+          if (!contourPts || contourPts.length < 3) continue;
+
+          const xCm = startX + c * (cellW + gap), yCm = startY + r * (cellH + gap);
+          const scaleX = cellW / img.naturalWidth, scaleY = cellH / img.naturalHeight;
+
+          ctx.strokeStyle = '#ff0000'; 
+          ctx.lineWidth = 1.5;
+          ctx.lineJoin = 'miter'; // Menggunakan sudut miter standar
+          ctx.beginPath();
+          contourPts.forEach((p, i) => {
+            const px = (xCm + p.x * scaleX) * pxPerCm;
+            const py = (yCm + p.y * scaleY) * pxPerCm;
+            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          });
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+    }
+  };
+
+  window.showDiecutPage = function(page) {
+    currentPage = page;
+    document.getElementById('dcTab1').classList.toggle('active', page === 1);
+    document.getElementById('dcTab2').classList.toggle('active', page === 2);
+    drawDiecutPreview();
+  };
+
+  genBtn.addEventListener('click', () => {
+    if (!dcImages.length) return;
+    genBtn.disabled = true;
+    genBtn.textContent = '⏳ Menyusun PDF…';
+
+    setTimeout(() => {
+      try {
+        const { jsPDF } = window.jspdf;
+        const PW = getPW(), PH = getPH();
+        const HR = 96; 
+        const { cellW, cellH, gap } = getDcParams();
+        const { cols, rows, startX, startY } = calcDcGrid(cellW, cellH, gap);
+
+        const p1c = document.createElement('canvas');
+        p1c.width  = Math.round(PW * HR);
+        p1c.height = Math.round(PH * HR);
+        const p1x = p1c.getContext('2d');
+        p1x.clearRect(0, 0, p1c.width, p1c.height);
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const idx = (r * cols + c) % dcImages.length;
+            const { img } = dcImages[idx];
+            const xPx = (startX + c * (cellW + gap)) * HR;
+            const yPx = (startY + r * (cellH + gap)) * HR;
+            p1x.drawImage(img, xPx, yPx, cellW * HR, cellH * HR);
+          }
+        }
+
+        const orient = PW >= PH ? 'landscape' : 'portrait';
+        const pdf = new jsPDF({ unit: 'cm', format: [PW, PH], orientation: orient });
+        pdf.addImage(p1c.toDataURL('image/png'), 'PNG', 0, 0, PW, PH);
+
+        pdf.addPage([PW, PH], orient);
+        pdf.setDrawColor(255, 0, 0); 
+        pdf.setLineWidth(0.01); 
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const idx = (r * cols + c) % dcImages.length;
+            const { img, contourPts } = dcImages[idx];
+            if (!contourPts || contourPts.length < 3) continue;
+
+            const xCm = startX + c * (cellW + gap);
+            const yCm = startY + r * (cellH + gap);
+            const scaleX = cellW / img.naturalWidth;
+            const scaleY = cellH / img.naturalHeight;
+            
+            const mapped = contourPts.map(p => ({
+              x: xCm + p.x * scaleX,
+              y: yCm + p.y * scaleY
+            }));
+
+            const lines = [];
+            for (let i = 1; i < mapped.length; i++) {
+              lines.push([mapped[i].x - mapped[i-1].x, mapped[i].y - mapped[i-1].y]);
+            }
+            
+            pdf.lines(lines, mapped[0].x, mapped[0].y, [1, 1], 'S', true);
+          }
+        }
+
+        const total = cols * rows;
+        pdf.save(`SAE_Diecut_Contour_${total}pcs.pdf`);
+      } catch(err) {
+        alert('Gagal membuat PDF: ' + err.message);
+      }
+      genBtn.disabled = false;
+      genBtn.innerHTML = '💾 Simpan PDF (PNG + Cut Vector)';
+    }, 80);
+  });
+})();
+</script>
+</body>
+</html>
