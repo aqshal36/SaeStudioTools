@@ -1,0 +1,114 @@
+{
+  "updated": "2026-09-28",
+  "templates": [
+    {
+      "id": "Kartun C - 1",
+      "name": "Kalender 2027 — Kartun C1",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "hijau"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1.7 MB",
+      "folder": "Kartun C - 1"
+    },
+    {
+      "id": "Kartun C - 2",
+      "name": "Kalender 2027 — Kartun C2",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "biru", "doraemon"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "22.1 MB",
+      "folder": "Kartun C - 2"
+    },
+    {
+      "id": "Kartun C - 3",
+      "name": "Kalender 2027 — Kartun C3",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "pink", "hello kitty"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "985 KB",
+      "folder": "Kartun C - 3"
+    },
+    {
+      "id": "Kartun C - 4",
+      "name": "Kalender 2027 — Kartun C4",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "pink", "kuromi", "hello kitty"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "961 KB",
+      "folder": "Kartun C - 4"
+    },
+    {
+      "id": "Kartun C - 5",
+      "name": "Kalender 2027 — Kartun C5",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "pink", "hello kitty"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1.46 MB",
+      "folder": "Kartun C - 5"
+    },
+    {
+      "id": "Kartun C - 6",
+      "name": "Kalender 2027 — Kartun C6",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "ungu", "kuromi", "hello kitty" ],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1 MB",
+      "folder": "Kartun C - 6"
+    },
+    {
+      "id": "Kartun C - 7",
+      "name": "Kalender 2027 — Kartun C7",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "pink", "lotto", "toy story"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "3.54 MB",
+      "folder": "Kartun C - 7"
+    },
+    {
+      "id": "Kartun C - 8",
+      "name": "Kalender 2027 — Kartun C8",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "pink", "pokemon", "pikachu"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1.04 MB",
+      "folder": "Kartun C - 8"
+    },
+    {
+      "id": "Kartun C - 9",
+      "name": "Kalender 2027 — Kartun C9",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "kuning", "spongebob"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.66 MB",
+      "folder": "Kartun C - 9"
+    },
+    {
+      "id": "Kartun C - 10",
+      "name": "Kalender 2027 — Kartun C10",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "kuning", "piglet", "winnie the pooh"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1.46 MB",
+      "folder": "Kartun C - 10"
+    },
+    {
+      "id": "Sports S - 61",
+      "name": "Kalender 2027 — Sports C1",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "putih", "basketball", "basket"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.24 MB",
+      "folder": "Sports S - 1"}
+  ]
+}
