@@ -180,7 +180,12 @@ canvas { width: 100%; height: 100%; display: block; }
             <option value="9">9 cm</option><option value="9.5">9.5 cm</option><option value="10">10 cm</option>
           </select>
         </div>
-        <button class="btn btn-primary" id="generatePdfCircle" style="display:none; margin-top:12px;">💾 Simpan PDF Kertas A3+</button>
+        <label style="display:flex; align-items:center; gap:8px; margin-top:14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; user-select:none;">
+  <input type="checkbox" id="includePlt" checked style="width:16px;height:16px;accent-color:var(--blue-light);cursor:pointer;">
+  Sertakan file PLT (otomatis sesuai diameter)
+</label>
+
+<button class="btn btn-primary" id="generatePdfCircle" style="display:none; margin-top:12px;">Simpan PDF + PLT</button>
       </div>
 
       <div class="mode-pane" id="paneLines">
@@ -390,18 +395,128 @@ function drawCirclePreview() {
   }; tempImg.src=processedData.erasedDataUrl;
 }
 
-generatePdfCircle.addEventListener('click',()=>{
-  if(!processedData) return;
-  loadingEl.style.display='block'; loadingEl.textContent="Menyusun file PDF..."; generatePdfCircle.style.display='none';
-  setTimeout(()=>{
-    const {jsPDF}=window.jspdf; const pdf=new jsPDF({unit:'cm',format:[32,48],orientation:'portrait'});
-    pdf.addImage(processedData.erasedDataUrl,'PNG',0,0,32,48);
-    const rCm=parseFloat(sizeSelect.value)/2;
-    for(let c of processedData.centers){
-      pdf.addImage(circularDesignUrl,'PNG',c.x/processedData.pixelsPerCm-rCm,c.y/processedData.pixelsPerCm-rCm,rCm*2,rCm*2);
+
+/* ── Peta diameter → nama file PLT (barcode) ──
+   Isi sesuai pasangan pola yang kamu punya.
+   Key = value dari <select id="sizeSelect">, value = nama file TANPA .plt  */
+const PLT_MAP = {
+  "1":    "31524250",
+  "1.1":  "36244277",
+  "1.2":  "89462044",
+  "1.3":  "12663240",
+  "1.4":  "63308737",
+  "1.5":  "66527681",
+  "1.6":  "57087226",
+  "1.7":  "36244277",
+  "1.8":  "82279107",
+  "1.9":  "87378327",
+  "2":    "88688219",
+  "2.5":  "03927844",
+  "3":    "53148934",
+  "3.5":  "88364183",
+  "4":    "30506730",
+  "4.5":  "66933898",
+  "5":    "30933743",
+  "5.5":  "77069920",
+  "6":    "45180127",
+  "6.5":  "25285684",
+  "7":    "69640269",
+  "7.5":  "51846174",
+  "8":    "89160565",
+  "8.5":  "95692170",
+  "9":    "87661969",
+  "9.5":  "62671008",
+  "10":   "04687893"
+};
+
+const PLT_FOLDER = 'assets/plt';
+
+/* Ambil file PLT dari server (assets/plt/<barcode>.plt) lalu download
+   dengan nama asli barcode supaya mesin cutting tetap bisa baca. */
+async function downloadPlt(sizeCm) {
+  const barcode = PLT_MAP[String(sizeCm)];
+
+  if (!barcode) {
+    console.warn(`[PLT] Tidak ada mapping untuk diameter ${sizeCm}cm`);
+    return { ok: false, reason: 'no-mapping' };
+  }
+
+  const url = `${PLT_FOLDER}/${barcode}.plt`;
+
+  try {
+    const res = await fetch(url, { cache: 'force-cache' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const blob = await res.blob();
+    const objUrl = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = objUrl;
+    // simpan pakai nama barcode asli → mesin bisa langsung baca
+    a.download = `${barcode}.plt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    setTimeout(() => URL.revokeObjectURL(objUrl), 1500);
+    return { ok: true, barcode };
+  } catch (err) {
+    console.warn('[PLT] Gagal unduh:', url, err);
+    return { ok: false, reason: 'fetch-error', barcode };
+  }
+}
+
+generatePdfCircle.addEventListener('click', () => {
+  if (!processedData) return;
+  loadingEl.style.display = 'block';
+  loadingEl.textContent = 'Menyusun file PDF...';
+  generatePdfCircle.style.display = 'none';
+
+  setTimeout(async () => {
+    try {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'cm', format: [32, 48], orientation: 'portrait' });
+      pdf.addImage(processedData.erasedDataUrl, 'PNG', 0, 0, 32, 48);
+
+      const rCm = parseFloat(sizeSelect.value) / 2;
+      for (const c of processedData.centers) {
+        pdf.addImage(
+          circularDesignUrl, 'PNG',
+          c.x / processedData.pixelsPerCm - rCm,
+          c.y / processedData.pixelsPerCm - rCm,
+          rCm * 2, rCm * 2
+        );
+      }
+
+      const sizeCm = sizeSelect.value;
+      const baseName = `SAE_Circle_${sizeCm}cm_${processedData.centers.length}pcs`;
+      pdf.save(`${baseName}.pdf`);
+
+      // ── Auto-download PLT ──
+      const includePlt = document.getElementById('includePlt');
+      if (includePlt && includePlt.checked) {
+        loadingEl.textContent = '📥 Mengunduh file PLT...';
+        await new Promise(r => setTimeout(r, 500)); // beri jeda ke browser
+
+        const result = await downloadPlt(sizeCm);
+
+        if (!result.ok && result.reason === 'no-mapping') {
+          loadingEl.textContent = `⚠️ PDF tersimpan. Mapping PLT untuk ${sizeCm}cm belum diisi.`;
+          await new Promise(r => setTimeout(r, 2500));
+        } else if (!result.ok) {
+          loadingEl.textContent = `⚠️ PDF tersimpan. PLT ${result.barcode}.plt tidak ditemukan di server.`;
+          await new Promise(r => setTimeout(r, 2500));
+        }
+      }
+
+      loadingEl.style.display = 'none';
+      loadingEl.textContent = '⏳ Menyelaraskan grid…';
+      generatePdfCircle.style.display = 'flex';
+    } catch (err) {
+      console.error(err);
+      loadingEl.textContent = '❌ Terjadi kesalahan: ' + err.message;
+      generatePdfCircle.style.display = 'flex';
     }
-    pdf.save(`SAE_Circle_${processedData.centers.length}pcs.pdf`);
-    loadingEl.style.display='none'; generatePdfCircle.style.display='flex';
   }, 100);
 });
 
