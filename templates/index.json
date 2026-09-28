@@ -2,14 +2,26 @@
   "updated": "2026-09-28",
   "templates": [
     {
+      "id": "Xtra X - 1",
+      "name": "Kalender 2027 — Xtra 1",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["kartun", "putih", "basketball", "basket"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "3.2 MB",
+      "folder": "Xtra X - 1",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Xtra%20X%20-%201/X%20-%201.cdr"
+    },
+    {
       "id": "Kartun C - 1",
       "name": "Kalender 2027 — Kartun C1",
       "category": "kalender",
       "year": 2027,
       "tags": ["kartun", "hijau"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "1.7 MB",
-      "folder": "Kartun C - 1"
+      "cdrSize": "1.2 MB",
+      "folder": "Kartun C - 1",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%201/C%20-%201.cdr"
     },
     {
       "id": "Kartun C - 2",
@@ -18,8 +30,9 @@
       "year": 2027,
       "tags": ["kartun", "biru", "doraemon"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "22.1 MB",
-      "folder": "Kartun C - 2"
+      "cdrSize": "2.0 MB",
+      "folder": "Kartun C - 2",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%202/C%20-%202.cdr"
     },
     {
       "id": "Kartun C - 3",
@@ -28,8 +41,9 @@
       "year": 2027,
       "tags": ["kartun", "pink", "hello kitty"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "985 KB",
-      "folder": "Kartun C - 3"
+      "cdrSize": "986 KB",
+      "folder": "Kartun C - 3",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%203/C%20-%203.cdr"
     },
     {
       "id": "Kartun C - 4",
@@ -38,8 +52,9 @@
       "year": 2027,
       "tags": ["kartun", "pink", "kuromi", "hello kitty"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "961 KB",
-      "folder": "Kartun C - 4"
+      "cdrSize": "962 KB",
+      "folder": "Kartun C - 4",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%204/C%20-%204.cdr"
     },
     {
       "id": "Kartun C - 5",
@@ -48,18 +63,20 @@
       "year": 2027,
       "tags": ["kartun", "pink", "hello kitty"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "1.46 MB",
-      "folder": "Kartun C - 5"
+      "cdrSize": "1.5 MB",
+      "folder": "Kartun C - 5",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%205/C%20-%205.cdr"
     },
     {
       "id": "Kartun C - 6",
       "name": "Kalender 2027 — Kartun C6",
       "category": "kalender",
       "year": 2027,
-      "tags": ["kartun", "ungu", "kuromi", "hello kitty" ],
+      "tags": ["kartun", "ungu", "kuromi", "hello kitty"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "1 MB",
-      "folder": "Kartun C - 6"
+      "cdrSize": "778 KB",
+      "folder": "Kartun C - 6",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%206/C%20-%206.cdr"
     },
     {
       "id": "Kartun C - 7",
@@ -68,8 +85,9 @@
       "year": 2027,
       "tags": ["kartun", "pink", "lotto", "toy story"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "3.54 MB",
-      "folder": "Kartun C - 7"
+      "cdrSize": "3.6 MB",
+      "folder": "Kartun C - 7",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%207/C%20-%207.cdr"
     },
     {
       "id": "Kartun C - 8",
@@ -78,8 +96,9 @@
       "year": 2027,
       "tags": ["kartun", "pink", "pokemon", "pikachu"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "1.04 MB",
-      "folder": "Kartun C - 8"
+      "cdrSize": "913 KB",
+      "folder": "Kartun C - 8",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%208/C%20-%208.cdr"
     },
     {
       "id": "Kartun C - 9",
@@ -88,8 +107,9 @@
       "year": 2027,
       "tags": ["kartun", "kuning", "spongebob"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "2.66 MB",
-      "folder": "Kartun C - 9"
+      "cdrSize": "2.7 MB",
+      "folder": "Kartun C - 9",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%209/C%20-%209.cdr"
     },
     {
       "id": "Kartun C - 10",
@@ -98,17 +118,20 @@
       "year": 2027,
       "tags": ["kartun", "kuning", "piglet", "winnie the pooh"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "1.46 MB",
-      "folder": "Kartun C - 10"
+      "cdrSize": "2.0 MB",
+      "folder": "Kartun C - 10",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Kartun%20C%20-%2010/C%20-%2010.cdr"
     },
     {
-      "id": "Sports S - 61",
-      "name": "Kalender 2027 — Sports C1",
+      "id": "Sports S - 1",
+      "name": "Kalender 2027 — Sports 1",
       "category": "kalender",
       "year": 2027,
       "tags": ["kartun", "putih", "basketball", "basket"],
       "size": "A3+ (32×48 cm)",
-      "cdrSize": "2.24 MB",
-      "folder": "Sports S - 1"}
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 1",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%201/S%20-%201.cdr"
+    }
   ]
 }
