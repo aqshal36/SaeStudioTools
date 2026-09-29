@@ -2,17 +2,6 @@
   "updated": "2026-09-28",
   "templates": [
     {
-      "id": "Xtra X - 1",
-      "name": "Kalender 2027 — Xtra 1",
-      "category": "kalender",
-      "year": 2027,
-      "tags": ["kartun", "putih", "basketball", "basket"],
-      "size": "A3+ (32×48 cm)",
-      "cdrSize": "3.2 MB",
-      "folder": "Xtra X - 1",
-      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Xtra%20X%20-%201/X%20-%201.cdr"
-    },
-    {
       "id": "Kartun C - 1",
       "name": "Kalender 2027 — Kartun C1",
       "category": "kalender",
@@ -127,11 +116,242 @@
       "name": "Kalender 2027 — Sports 1",
       "category": "kalender",
       "year": 2027,
-      "tags": ["kartun", "putih", "basketball", "basket"],
+      "tags": ["sports", "putih", "basketball", "basket"],
       "size": "A3+ (32×48 cm)",
       "cdrSize": "2.2 MB",
       "folder": "Sports S - 1",
       "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%201/S%20-%201.cdr"
+    },
+    {
+      "id": "Sports S - 2",
+      "name": "Kalender 2027 — Sports 2",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["sports  ", "putih", "real madrid", "football", "soccer"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 2",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%202/S%20-%202.cdr"
+    },
+    {
+      "id": "Sports S - 3",
+      "name": "Kalender 2027 — Sports 3",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["sports  ", "putih", "indonesi", "football", "soccer"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 3",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%203/S%20-%203.cdr"
+    },
+    {
+      "id": "Sports S - 4",
+      "name": "Kalender 2027 — Sports 4",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["sports", "putih", "barca", "biru"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 4",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%204/S%20-%204.cdr"
+    },
+    {
+      "id": "Sports S - 5",
+      "name": "Kalender 2027 — Sports 5",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["sports", "putih", "liverpool", "mera"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 5",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%205/S%20-%205.cdr"
+    },
+    {
+      "id": "Sports S - 6",
+      "name": "Kalender 2027 — Sports 6",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["sports", "putih", "real madrid", "kuning"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 6",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%206/S%20-%206.cdr"
+    },
+    {
+      "id": "Sports S - 7",
+      "name": "Kalender 2027 — Sports 7",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["sports", "putih", "MU", "merah"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 7",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%207/S%20-%207.cdr"
+    },
+    {
+      "id": "Sports S - 8",
+      "name": "Kalender 2027 — Sports 8",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["sports", "ronaldo", "messi", "coklat"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 8",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%208/S%20-%208.cdr"
+    },
+    {
+      "id": "Sports S - 9",
+      "name": "Kalender 2027 — Sports 9",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["sports", "putih", "indonesia", "merah"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.2 MB",
+      "folder": "Sports S - 9",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Sports%20S%20-%209/S%20-%209.cdr"
+    },
+    {
+      "id": "Aesthethic D - 01",
+      "name": "Kalender 2027 — Aesthethic 1",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "coklat"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "3.2 MB",
+      "folder": "Aesthethic D - 01",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2001/D%20-%2001.cdr"
+    },
+    {
+      "id": "Aesthethic D - 02",
+      "name": "Kalender 2027 — Aesthethic 2",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "pink", "biru"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1.55 MB",
+      "folder": "Aesthethic D - 02",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2002/D%20-%2002.cdr"
+    },
+    {
+      "id": "Aesthethic D - 03",
+      "name": "Kalender 2027 — Aesthethic 3",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "coklat"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1 MB",
+      "folder": "Aesthethic D - 03",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2003/D%20-%2003.cdr"
+    },
+    {
+      "id": "Aesthethic D - 04",
+      "name": "Kalender 2027 — Aesthethic 4",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "biiru", "coklat"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1 MB",
+      "folder": "Aesthethic D - 04",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2004/D%20-%2004.cdr"
+    },
+    {
+      "id": "Aesthethic D - 05",
+      "name": "Kalender 2027 — Aesthethic 5",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "coklat"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1.2 MB",
+      "folder": "Aesthethic D - 05",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2005/D%20-%2005.cdr"
+    },
+    {
+      "id": "Aesthethic D - 06",
+      "name": "Kalender 2027 — Aesthethic 6",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "pink"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1.2 MB",
+      "folder": "Aesthethic D - 06",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2006/D%20-%2006.cdr"
+    },
+    {
+      "id": "Aesthethic D - 07",
+      "name": "Kalender 2027 — Aesthethic 7",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "emas"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1 MB",
+      "folder": "Aesthethic D - 07",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2007/D%20-%2007.cdr"
+    },
+    {
+      "id": "Aesthethic D - 08",
+      "name": "Kalender 2027 — Aesthethic 8",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "coklat"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1 MB",
+      "folder": "Aesthethic D - 08",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2008/D%20-%2008.cdr"
+    },
+    {
+      "id": "Aesthethic D - 09",
+      "name": "Kalender 2027 — Aesthethic 9",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "biru"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1 MB",
+      "folder": "Aesthethic D - 09",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2009/D%20-%2009.cdr"
+    },
+    {
+      "id": "Aesthethic D - 10",
+      "name": "Kalender 2027 — Aesthethic 10",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "coklat", "merah"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "1.2 MB",
+      "folder": "Aesthethic D - 10",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2010/D%20-%2010.cdr"
+    },
+    {
+      "id": "Aesthethic D - 11",
+      "name": "Kalender 2027 — Aesthethic 11",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "biru"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "2.3616 MB",
+      "folder": "Aesthethic D - 11",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2011/D%20-%2011.cdr"
+    },
+    {
+      "id": "Aesthethic D - 12",
+      "name": "Kalender 2027 — Aesthethic 12",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "hijau"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "4.7 MB",
+      "folder": "Aesthethic D - 12",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2012/D%20-%2012.cdr"
+    },
+    {
+      "id": "Aesthethic D - 13",
+      "name": "Kalender 2027 — Aesthethic 13",
+      "category": "kalender",
+      "year": 2027,
+      "tags": ["aesthethic", "putih", "coklat"],
+      "size": "A3+ (32×48 cm)",
+      "cdrSize": "5.7 MB",
+      "folder": "Aesthethic D - 13",
+      "cdrUrl": "https://media.githubusercontent.com/media/aqshal36/SaeStudioTools/main/templates/Aesthethic%20D%20-%2013/D%20-%2013.cdr"
     }
   ]
 }
